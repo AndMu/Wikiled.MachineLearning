@@ -95,6 +95,7 @@
     <Compile Include="Mathematics\Vectors\ICell.cs" />
     <Compile Include="Mathematics\Vectors\IDictionaryVectorHelper.cs" />
     <Compile Include="Mathematics\Vectors\IDistance.cs" />
+    <Compile Include="Mathematics\Vectors\IVectorDataFactory.cs" />
     <Compile Include="Mathematics\Vectors\L2Distance.cs" />
     <Compile Include="Mathematics\Vectors\SimpleCell.cs" />
     <Compile Include="Mathematics\Vectors\Vector2.cs" />

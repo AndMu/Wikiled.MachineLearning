@@ -3,12 +3,17 @@ using Wikiled.Arff.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    public class VectorDataFactory
+    public class VectorDataFactory : IVectorDataFactory
     {
-        public static readonly VectorDataFactory Instance = new VectorDataFactory();
-        
+        public static IVectorDataFactory Instance { get; } = new VectorDataFactory();
+
         private VectorDataFactory()
         {
+        }
+
+        public VectorData CreateSimple(params double[] cells)
+        {
+            return CreateSimple(NormalizationType.None, cells);
         }
 
         public VectorData CreateSimple(NormalizationType normalizationType, params double[] cells)

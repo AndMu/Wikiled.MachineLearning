@@ -8,12 +8,20 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
     [TestFixture]
     public class CosineSimilarityDistanceTests
     {
+        private CosineSimilarityDistance instance;
+
+        [SetUp]
+        public void Setup()
+        {
+            instance = new CosineSimilarityDistance();
+        }
+
         [Test]
         public void TestSimilar()
         {
             VectorData vector1 = VectorDataFactory.Instance.CreateSimple(NormalizationType.None, 1, 1, 1);
             VectorData vector2 = VectorDataFactory.Instance.CreateSimple(NormalizationType.None, 2, 2, 2);
-            double similarity = CosineSimilarityDistance.Instance.Measure(vector1, vector2);
+            double similarity = instance.Measure(vector1, vector2);
             Assert.AreEqual(1, Math.Round(similarity, 4));
         }
 
@@ -22,7 +30,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         {
             VectorData vector1 = VectorDataFactory.Instance.CreateSimple(NormalizationType.L2, 1, 1, 1);
             VectorData vector2 = VectorDataFactory.Instance.CreateSimple(NormalizationType.L2, 2, 2, 2);
-            double similarity = CosineSimilarityDistance.Instance.Measure(vector1, vector2);
+            double similarity = instance.Measure(vector1, vector2);
             Assert.AreEqual(1, Math.Round(similarity, 4));
         }
 
@@ -31,7 +39,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         {
             VectorData vector1 = VectorDataFactory.Instance.CreateSimple(NormalizationType.None, 1, 1, 1);
             VectorData vector2 = VectorDataFactory.Instance.CreateSimple(NormalizationType.None, -1, -1, -1);
-            double similarity = CosineSimilarityDistance.Instance.Measure(vector1, vector2);
+            double similarity = instance.Measure(vector1, vector2);
             Assert.AreEqual(-1, Math.Round(similarity, 4));
         }
     }

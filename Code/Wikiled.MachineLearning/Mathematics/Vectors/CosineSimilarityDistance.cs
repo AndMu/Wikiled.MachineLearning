@@ -2,14 +2,8 @@
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    public class CosineSimilarityDistance: DistanceBase
+    public class CosineSimilarityDistance : DistanceBase
     {
-        public static readonly CosineSimilarityDistance Instance = new CosineSimilarityDistance();
-
-        private CosineSimilarityDistance()
-        {
-        }
-
         protected override double Calculate(VectorData vector1, VectorData vector2)
         {
             int minimumLength = ((vector2.Length < vector1.Length) ? vector2.Length : vector1.Length);

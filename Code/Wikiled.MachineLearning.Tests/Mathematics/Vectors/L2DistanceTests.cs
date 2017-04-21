@@ -8,6 +8,14 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
     [TestFixture]
     public class L2DistanceTests
     {
+        private L2Distance instance;
+
+        [SetUp]
+        public void Setup()
+        {
+            instance = new L2Distance();
+        }
+
         [Test]
         public void MeasureSimple()
         {
@@ -23,7 +31,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("-2", -2),
                 new SimpleCell("15", 15));
 
-            double result = L2Distance.Instance.Measure(vector1, vector2);
+            double result = instance.Measure(vector1, vector2);
             Assert.AreEqual(13, result);
         }
 
@@ -42,7 +50,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("-2", -2),
                 new SimpleCell("15", 15));
 
-            double result = L2Distance.Instance.Measure(vector1, vector2);
+            double result = instance.Measure(vector1, vector2);
             Assert.AreEqual(0.68, Math.Round(result, 2));
         }
 
@@ -60,7 +68,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentException>(() => L2Distance.Instance.Measure(vector1, vector2));
+            Assert.Throws<ArgumentException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]
@@ -75,7 +83,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentException>(() => L2Distance.Instance.Measure(vector1, vector2));
+            Assert.Throws<ArgumentException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]
@@ -86,7 +94,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("1", 1),
                 new SimpleCell("3", 3));
 
-            Assert.Throws<ArgumentNullException>(() => L2Distance.Instance.Measure(vector1, null));
+            Assert.Throws<ArgumentNullException>(() => instance.Measure(vector1, null));
         }
     }
 }

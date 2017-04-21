@@ -73,7 +73,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                 VectorCell outCell;
                 if (index > Length)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 return DataTable.TryGetValue(index, out outCell)
