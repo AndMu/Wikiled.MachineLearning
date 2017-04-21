@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{314A8BFE-8DE4-4D03-9D08-C9D8438B104A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wikiled.MachineLearning.Tests</RootNamespace>
+    <AssemblyName>Wikiled.MachineLearning.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Crc32C.NET, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.1.0\lib\net451\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Snappy.NET, Version=1.1.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wikiled.Arff, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wikiled.Arff.1.0.12\lib\net462\Wikiled.Arff.dll</HintPath>
+    </Reference>
+    <Reference Include="Wikiled.Core.Utility, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wikiled.Core.Utility.2.1.4\lib\net462\Wikiled.Core.Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Clustering\ClusterFlowTests.cs" />
+    <Compile Include="Mathematics\CoefficientsTests.cs" />
+    <Compile Include="Mathematics\NumericExtensionsTests.cs" />
+    <Compile Include="Mathematics\PrecisionRecallCalculatorTests.cs" />
+    <Compile Include="Mathematics\RatingExtensionTests.cs" />
+    <Compile Include="Mathematics\StatisticsCalculatorTests.cs" />
+    <Compile Include="Mathematics\Statistics\AttachedDataPointsTransformTests.cs" />
+    <Compile Include="Mathematics\Statistics\DataPointsTransformTests.cs" />
+    <Compile Include="Mathematics\Statistics\FullCrossCorrelationTests.cs" />
+    <Compile Include="Mathematics\Statistics\GrangerCausalityTests.cs" />
+    <Compile Include="Mathematics\Statistics\OLSMultipleLinearRegressionTests.cs" />
+    <Compile Include="Mathematics\Statistics\SimpleCrossCorrelationTest.cs" />
+    <Compile Include="Mathematics\Vectors\CosineSimilarityDistanceTests.cs" />
+    <Compile Include="Mathematics\Vectors\DataSetNormalizationTests.cs" />
+    <Compile Include="Mathematics\Vectors\DictionaryVectorHelperTests.cs" />
+    <Compile Include="Mathematics\Vectors\L2DistanceTests.cs" />
+    <Compile Include="Mathematics\Vectors\VectorDataTests.cs" />
+    <Compile Include="Mathematics\Vectors\VectorMathematicsTests.cs" />
+    <Compile Include="Mathematics\Vectors\WrappedDictionaryVectorHelperTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mathematics\Statistics\data.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wikiled.MachineLearning\Wikiled.MachineLearning.csproj">
+      <Project>{F02D69BE-A77B-48DF-8DD7-697458794F93}</Project>
+      <Name>Wikiled.MachineLearning</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

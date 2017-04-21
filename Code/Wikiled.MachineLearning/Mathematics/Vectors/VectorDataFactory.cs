@@ -1,0 +1,30 @@
+﻿using System.Linq;
+using Wikiled.Arff.Normalization;
+
+namespace Wikiled.MachineLearning.Mathematics.Vectors
+{
+    public class VectorDataFactory
+    {
+        public static readonly VectorDataFactory Instance = new VectorDataFactory();
+        
+        private VectorDataFactory()
+        {
+        }
+
+        public VectorData CreateSimple(NormalizationType normalizationType, params double[] cells)
+        {
+            return CreateSimple(normalizationType, cells.Select(item => (ICell)new SimpleCell("cell", item)).ToArray());
+        }
+
+        public VectorData CreateSimple(NormalizationType normalizationType, params ICell[] cells)
+        {
+            VectorCell[] vectorCells = new VectorCell[cells.Length];
+            for (int i = 0; i < cells.Length; i++)
+            {
+                vectorCells[i] = new VectorCell(i, cells[i], 1);
+            }
+
+            return new VectorData(vectorCells, cells.Length, normalizationType);
+        }
+    }
+}

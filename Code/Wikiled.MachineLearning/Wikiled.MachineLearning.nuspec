@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Wikiled.MachineLearning</id>
+    <version>1.0.0</version>
+    <authors>Wikiled</authors>
+    <description>Wikiled MachineLearning Utilities</description>
+  </metadata>
+  <files>
+    <file src="bin\Release\Wikiled.MachineLearning.dll" target="lib\net462" />
+    <file src="bin\Release\Wikiled.MachineLearning.pdb" target="lib\net462" />
+    <file src="bin\Release\Alglib2.dll" target="lib\net462" />
+  </files>
+</package>
