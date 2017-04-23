@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    class VectorDataEnumerator : IEnumerator<VectorCell>
+    internal class VectorDataEnumerator : IEnumerator<VectorCell>
     {
         private readonly VectorData vector;
         private int index;
