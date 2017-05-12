@@ -1,5 +1,5 @@
 ﻿using System;
-using Wikiled.MachineLearning.Mathematics.Vectors;
+using System.Numerics;
 
 namespace Wikiled.MachineLearning.Mathematics
 {

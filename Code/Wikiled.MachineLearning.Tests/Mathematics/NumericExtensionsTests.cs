@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Numerics;
 using NUnit.Framework;
 using Wikiled.MachineLearning.Mathematics;
-using Wikiled.MachineLearning.Mathematics.Vectors;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics
 {

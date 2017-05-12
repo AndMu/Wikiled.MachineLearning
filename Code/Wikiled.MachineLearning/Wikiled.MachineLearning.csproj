@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,11 +99,9 @@
     <Compile Include="Mathematics\Vectors\IVectorDataFactory.cs" />
     <Compile Include="Mathematics\Vectors\L2Distance.cs" />
     <Compile Include="Mathematics\Vectors\SimpleCell.cs" />
-    <Compile Include="Mathematics\Vectors\Vector2.cs" />
     <Compile Include="Mathematics\Vectors\VectorCell.cs" />
     <Compile Include="Mathematics\Vectors\VectorData.cs" />
     <Compile Include="Mathematics\Vectors\VectorDataEnumerator.cs" />
-    <Compile Include="Mathematics\Vectors\VectorDataExtensions.cs" />
     <Compile Include="Mathematics\Vectors\VectorDataFactory.cs" />
     <Compile Include="Mathematics\Vectors\VectorMathematics.cs" />
     <Compile Include="Mathematics\Vectors\WrappedDictionaryVectorHelper.cs" />

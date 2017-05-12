@@ -52,6 +52,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                     }
                 }
             }
+
             var cells = values.OrderBy(item => item.Key)
                 .Select(item => new VectorCell(item.Key, new SimpleCell(item.Key.ToString(), item.Value), 0));
             return new VectorData(cells.ToArray(), length, normalizationType);

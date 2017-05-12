@@ -13,8 +13,8 @@
             return new SimpleCell(Name, Value);
         }
 
-        public double Value { get; private set; }
+        public double Value { get; }
 
-        public string Name { get; private set; }
+        public string Name { get; }
     }
 }
