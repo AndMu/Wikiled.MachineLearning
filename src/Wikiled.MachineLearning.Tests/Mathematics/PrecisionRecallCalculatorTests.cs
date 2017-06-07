@@ -7,23 +7,52 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
     [TestFixture]
     public class PrecisionRecallCalculatorTests
     {
+        private PrecisionRecallCalculator<bool> instance;
+
+        [SetUp]
+        public void Setup()
+        {
+            instance = new PrecisionRecallCalculator<bool>();
+        }
+
+        [Test]
+        public void Construct()
+        {
+            Assert.AreEqual(0, instance.Total);
+            Assert.AreEqual(0, instance.F1(true));
+            Assert.AreEqual(0, instance.GetPrecision(true));
+        }
+
+        [Test]
+        public void Add()
+        {
+            instance.Add(true, true);
+            instance.Add(true, false);
+            instance.Add(false, true);
+            instance.Add(false, true);
+            instance.Add(false, false);
+            Assert.AreEqual(0.33, Math.Round(instance.GetSingleAccuracy(false), 2));
+            Assert.AreEqual(0.4, Math.Round(instance.F1(true), 2));
+            Assert.AreEqual(0.5, Math.Round(instance.GetSingleAccuracy(true), 2));
+            Assert.AreEqual("Total:<5> Positive:<50.00%> Negative:<33.33%> F1:<0.40>", instance.GetTotalAccuracy());
+        }
+
         [Test]
         public void SimpleMissing()
         {
-            PrecisionRecallCalculator<bool> calculator = new PrecisionRecallCalculator<bool>();
             for (int i = 0; i < 3; i++)
             {
-                calculator.Add(true, true);
+                instance.Add(true, true);
             }
 
             for (int i = 0; i < 7; i++)
             {
-                calculator.Add(true, null);
+                instance.Add(true, null);
             }
 
-            Assert.AreEqual(1, calculator.GetPrecision(true));
-            Assert.AreEqual(0.3, calculator.GetRecall(true));
-            Assert.AreEqual(0.46, Math.Round(calculator.F1(true), 2));
+            Assert.AreEqual(1, instance.GetPrecision(true));
+            Assert.AreEqual(0.3, instance.GetRecall(true));
+            Assert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
@@ -91,73 +120,70 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         [Test]
         public void Simple1()
         {
-            PrecisionRecallCalculator<bool> calculator = new PrecisionRecallCalculator<bool>();
             for (int i = 0; i < 3; i++)
             {
-                calculator.Add(true, true);
+                instance.Add(true, true);
             }
 
             for (int i = 0; i < 7; i++)
             {
-                calculator.Add(false, true);
+                instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.3, calculator.GetPrecision(true));
-            Assert.AreEqual(1, calculator.GetRecall(true));
-            Assert.AreEqual(0.46, Math.Round(calculator.F1(true), 2));
+            Assert.AreEqual(0.3, instance.GetPrecision(true));
+            Assert.AreEqual(1, instance.GetRecall(true));
+            Assert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
         public void Simple2()
         {
-            PrecisionRecallCalculator<bool> calculator = new PrecisionRecallCalculator<bool>();
             for (int i = 0; i < 3; i++)
             {
-                calculator.Add(true, true);
+                instance.Add(true, true);
             }
 
             for (int i = 0; i < 4; i++)
             {
-                calculator.Add(false, false);
+                instance.Add(false, false);
             }
 
             for (int i = 0; i < 4; i++)
             {
-                calculator.Add(false, true);
+                instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.43, Math.Round(calculator.GetPrecision(true), 2));
-            Assert.AreEqual(1, calculator.GetRecall(true));
-            Assert.AreEqual(0.6, Math.Round(calculator.F1(true), 2));
+            Assert.AreEqual(0.43, Math.Round(instance.GetPrecision(true), 2));
+            Assert.AreEqual(1, instance.GetRecall(true));
+            Assert.AreEqual(0.6, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
         public void Simple3()
         {
-            PrecisionRecallCalculator<bool> calculator = new PrecisionRecallCalculator<bool>();
             for (int i = 0; i < 2; i++)
             {
-                calculator.Add(true, true);
+                instance.Add(true, true);
             }
 
             for (int i = 0; i < 1; i++)
             {
-                calculator.Add(true, false);
+                instance.Add(true, false);
             }
 
             for (int i = 0; i < 4; i++)
             {
-                calculator.Add(false, false);
+                instance.Add(false, false);
             }
 
             for (int i = 0; i < 3; i++)
             {
-                calculator.Add(false, true);
+                instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.4, calculator.GetPrecision(true));
-            Assert.AreEqual(0.67, Math.Round(calculator.GetRecall(true), 2));
-            Assert.AreEqual(0.5, Math.Round(calculator.F1(true), 2));
+            Assert.AreEqual(0.4, instance.GetPrecision(true));
+            Assert.AreEqual(0.67, Math.Round(instance.GetRecall(true), 2));
+            Assert.AreEqual(0.5, Math.Round(instance.F1(true), 2));
         }
     }
 }
