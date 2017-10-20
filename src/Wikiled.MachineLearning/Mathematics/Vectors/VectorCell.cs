@@ -22,6 +22,21 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             Data = textCell;
         }
 
+        public double Calculated => X * Theta;
+
+        public ICell Data { get; private set; }
+
+        public int Index { get; private set; }
+
+        public double Theta { get; private set; }
+
+        public double X { get => xAdjusted ?? Data.Value; set => xAdjusted = value; }
+
+        public override string ToString()
+        {
+            return string.Format("{2}:<{0}>:{1}:{3}", Data.Name, X, Index, Calculated);
+        }
+
         public object Clone()
         {
             var cloned = new VectorCell(Index, (ICell)Data.Clone(), Theta);
@@ -72,30 +87,5 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             writer.WriteAttributeString("theta", Theta.ToString());
             writer.WriteEndElement();
         }
-
-        public override string ToString()
-        {
-            return string.Format("{2}:<{0}>:{1}:{3}", Data.Name, X, Index, Calculated);
-        }
-
-        public double X
-        {
-            get
-            {
-                return xAdjusted ?? Data.Value;
-            }
-            set
-            {
-                xAdjusted = value;
-            }
-        }
-
-        public double Theta { get; private set; }
-
-        public double Calculated => X * Theta;
-
-        public int Index { get; private set; }
-
-        public ICell Data { get; private set; }
     }
 }

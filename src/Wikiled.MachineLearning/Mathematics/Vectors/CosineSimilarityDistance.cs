@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
@@ -6,15 +7,36 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
     {
         protected override double Calculate(VectorData vector1, VectorData vector2)
         {
-            int minimumLength = ((vector2.Length < vector1.Length) ? vector2.Length : vector1.Length);
+            if (vector1.Length != vector2.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vector1), "Vectors length does not match");
+            }
+
             double dot = 0.0d;
             double mag1 = 0.0d;
             double mag2 = 0.0d;
-            for (int n = 0; n < minimumLength; n++)
+            HashSet<int> calculated = new HashSet<int>();
+            foreach (var vectorCell in vector1.DataTable)
             {
-                dot += vector1[n].X * vector2[n].X;
-                mag1 += Math.Pow(vector1[n].X, 2);
-                mag2 += Math.Pow(vector2[n].X, 2);
+                var x1 = vectorCell.Value.X;
+                var x2 = 0.0d;
+                mag1 += Math.Pow(x1, 2);
+                if (vector2.DataTable.TryGetValue(vectorCell.Key, out var another))
+                {
+                    x2 = another.X;
+                    mag2 += Math.Pow(x2, 2);
+                    dot += x1 * x2;
+                    calculated.Add(vectorCell.Key);
+                }
+            }
+
+            foreach (var vectorCell in vector2.DataTable)
+            {
+                if (!calculated.Contains(vectorCell.Key))
+                {
+                    var x2 = vectorCell.Value.X;
+                    mag2 += Math.Pow(x2, 2);
+                }
             }
 
             return dot / (Math.Sqrt(mag1) * Math.Sqrt(mag2));
