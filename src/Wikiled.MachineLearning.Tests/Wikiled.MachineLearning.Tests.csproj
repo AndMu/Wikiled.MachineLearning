@@ -83,11 +83,9 @@
     <Compile Include="Mathematics\Statistics\SimpleCrossCorrelationTest.cs" />
     <Compile Include="Mathematics\Vectors\CosineSimilarityDistanceTests.cs" />
     <Compile Include="Mathematics\Vectors\DataSetNormalizationTests.cs" />
-    <Compile Include="Mathematics\Vectors\DictionaryVectorHelperTests.cs" />
     <Compile Include="Mathematics\Vectors\L2DistanceTests.cs" />
     <Compile Include="Mathematics\Vectors\VectorDataTests.cs" />
     <Compile Include="Mathematics\Vectors\VectorMathematicsTests.cs" />
-    <Compile Include="Mathematics\Vectors\WrappedDictionaryVectorHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
