@@ -34,7 +34,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Assert.AreEqual(0.33, Math.Round(instance.GetSingleAccuracy(false), 2));
             Assert.AreEqual(0.4, Math.Round(instance.F1(true), 2));
             Assert.AreEqual(0.5, Math.Round(instance.GetSingleAccuracy(true), 2));
-            Assert.AreEqual("Total:<5> Positive:<50.00%> Negative:<33.33%> F1:<0.40>", instance.GetTotalAccuracy());
+            Assert.AreEqual("Total:<5> Positive:<50.000%> Negative:<33.333%> F1:<0.400>", instance.GetTotalAccuracy());
         }
 
         [Test]
