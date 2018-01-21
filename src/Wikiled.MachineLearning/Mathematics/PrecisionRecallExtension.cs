@@ -4,7 +4,7 @@
     {
         public static string GetTotalAccuracy(this PrecisionRecallCalculator<bool> calculator)
         {
-            return $"Total:<{calculator.Total}> Positive:<{calculator.GetSingleAccuracy(true) * 100:F2}%> Negative:<{calculator.GetSingleAccuracy(false) * 100:F2}%> F1:<{calculator.F1(true):F2}>";
+            return $"Total:<{calculator.Total}> Positive:<{calculator.GetSingleAccuracy(true) * 100:F3}%> Negative:<{calculator.GetSingleAccuracy(false) * 100:F3}%> F1:<{calculator.F1(true):F3}>";
         }
 
         /// <summary>
