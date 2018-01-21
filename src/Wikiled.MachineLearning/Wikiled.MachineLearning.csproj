@@ -94,7 +94,6 @@
     <Compile Include="Mathematics\TfIdf.cs" />
     <Compile Include="Mathematics\Vectors\CosineSimilarityDistance.cs" />
     <Compile Include="Mathematics\Vectors\DataSetNormalization.cs" />
-    <Compile Include="Mathematics\Vectors\DictionaryVectorHelper.cs" />
     <Compile Include="Mathematics\Vectors\DistanceBase.cs" />
     <Compile Include="Mathematics\Vectors\ICell.cs" />
     <Compile Include="Mathematics\Vectors\IDictionaryVectorHelper.cs" />
@@ -107,7 +106,6 @@
     <Compile Include="Mathematics\Vectors\VectorDataEnumerator.cs" />
     <Compile Include="Mathematics\Vectors\VectorDataFactory.cs" />
     <Compile Include="Mathematics\Vectors\VectorMathematics.cs" />
-    <Compile Include="Mathematics\Vectors\WrappedDictionaryVectorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

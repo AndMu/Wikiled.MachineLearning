@@ -22,7 +22,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
         private Lazy<VectorCell[]> normalizedData;
 
         /// <summary>
-        /// Required for XML serialization
+        ///     Required for XML serialization
         /// </summary>
         public VectorData()
         {
@@ -57,28 +57,27 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
         }
 
-        private Dictionary<int, VectorCell> DataTable
-        {
-            get
-            {
-                return dataTableValues ??
-                       (dataTableValues = normalizedData.Value.ToDictionary(item => item.Index, item => item));
-            }
-        }
-
         public VectorCell this[int index]
         {
             get
             {
-                VectorCell outCell;
                 if (index > Length)
                 {
                     throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
-                return DataTable.TryGetValue(index, out outCell)
+                return DataTable.TryGetValue(index, out var outCell)
                            ? outCell
                            : new VectorCell(index, new SimpleCell(index.ToString(), 0), 0);
+            }
+        }
+
+        public Dictionary<int, VectorCell> DataTable
+        {
+            get
+            {
+                return dataTableValues ??
+                       (dataTableValues = normalizedData.Value.ToDictionary(item => item.Index, item => item));
             }
         }
 
@@ -92,6 +91,17 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
 
             return builder.ToString();
+        }
+
+        public int[] BuildOccurenceVector()
+        {
+            int[] vector = new int[Length];
+            foreach (var cell in DataTable)
+            {
+                vector[cell.Value.Index] = (int)cell.Value.Data.Value;
+            }
+
+            return vector;
         }
 
         public void ChangeNormalization(NormalizationType normalizationType)
@@ -185,7 +195,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             OriginalCells = data;
             Length = length;
             if (data.Length > Length ||
-                (data.Length > 0 && data.Max(item => item.Index) >= Length))
+                data.Length > 0 && data.Max(item => item.Index) >= Length)
             {
                 throw new ArgumentOutOfRangeException("length");
             }

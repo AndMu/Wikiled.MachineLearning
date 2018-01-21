@@ -6,6 +6,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
     internal class VectorDataEnumerator : IEnumerator<VectorCell>
     {
         private readonly VectorData vector;
+
         private int index;
 
         public VectorDataEnumerator(VectorData vector)
@@ -33,17 +34,8 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             index = -1;
         }
 
-        public VectorCell Current
-        {
-            get
-            {
-                return index < 0 ? null : vector[index];
-            }
-        }
+        public VectorCell Current => index < 0 ? null : vector[index];
 
-        object IEnumerator.Current
-        {
-            get { return Current; }
-        }
+        object IEnumerator.Current => Current;
     }
 }
