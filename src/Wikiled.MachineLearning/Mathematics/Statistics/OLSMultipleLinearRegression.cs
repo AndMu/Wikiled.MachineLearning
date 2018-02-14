@@ -13,6 +13,8 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
         
         private alglib.sparsematrix xData;
 
+        private readonly VectorDataFactory vectorDataFactory = new VectorDataFactory();
+
         public OLSMultipleLinearRegression(double[] yData)
         {
             this.yData = yData;
@@ -41,7 +43,7 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
 
         public void AddXData(double[] xVector)
         {
-            var vector = VectorDataFactory.Instance.CreateSimple(NormalizationType.None, xVector);
+            var vector = vectorDataFactory.CreateSimple(NormalizationType.None, xVector);
             AddXData(vector);
         }
 

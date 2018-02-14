@@ -5,12 +5,6 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
     public class VectorDataFactory : IVectorDataFactory
     {
-        public static IVectorDataFactory Instance { get; } = new VectorDataFactory();
-
-        private VectorDataFactory()
-        {
-        }
-
         public VectorData CreateSimple(params double[] cells)
         {
             return CreateSimple(NormalizationType.None, cells);

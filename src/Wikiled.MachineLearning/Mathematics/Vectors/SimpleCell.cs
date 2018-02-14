@@ -8,13 +8,13 @@
             Name = name;
         }
 
+        public string Name { get; }
+
+        public double Value { get; }
+
         public object Clone()
         {
             return new SimpleCell(Name, Value);
         }
-
-        public double Value { get; }
-
-        public string Name { get; }
     }
 }

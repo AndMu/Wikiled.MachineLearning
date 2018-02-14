@@ -4,7 +4,7 @@ namespace Wikiled.MachineLearning.Mathematics
 {
     public static class Coefficients
     {
-        static readonly double totalDocs = Math.Pow(10, 10);
+        private static readonly double totalDocs = Math.Pow(10, 10);
 
         public static double WebJaccard(long totalFirst, long totalSecond, long totalSum)
         {

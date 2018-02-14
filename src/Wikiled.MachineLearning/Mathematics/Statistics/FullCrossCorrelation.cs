@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Wikiled.Core.Utility.Extensions;
+using Wikiled.Common.Extensions;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
@@ -14,6 +14,28 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
             this.isInverted = isInverted;
             Signal = signal;
             Pattern = pattern;
+        }
+
+        public double Auto { get; private set; }
+
+        public double[] Correlations { get; private set; }
+
+        public int Offset { get; private set; }
+
+        public double[] Pattern { get; }
+
+        public CorrelationResult Result { get; private set; }
+
+        public double[] Signal { get; }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            result.AppendFormat("Offset: {0}\r\n", Offset);
+            result.AppendFormat("Auto: {0}\r\n", Auto);
+            result.AppendFormat("Correlations: {0}\r\n", Correlations.Select(item => item.ToString()).AccumulateItems(","));
+            result.Append(Result);
+            return result.ToString();
         }
 
         public void Calculate(int? take = null)
@@ -35,7 +57,7 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
             foreach (var result in Correlations)
             {
                 bool bigger = isInverted ? result < max : result > max;
-                if (bigger) 
+                if (bigger)
                 {
                     Offset = i;
                     max = result;
@@ -46,33 +68,11 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
 
             if (Offset >= offset)
             {
-                Offset = Offset - (2 * offset);
+                Offset = Offset - 2 * offset;
             }
 
             Result = SimpleCrossCorrelation.Calculate(Pattern, Signal, Offset);
             Auto = SimpleCrossCorrelation.Calculate(Signal, Signal, Offset).Result;
         }
-
-        public override string ToString()
-        {
-            StringBuilder result = new StringBuilder();
-            result.AppendFormat("Offset: {0}\r\n", Offset);
-            result.AppendFormat("Auto: {0}\r\n", Auto);
-            result.AppendFormat("Correlations: {0}\r\n", Correlations.Select(item => item.ToString()).AccumulateItems(","));
-            result.Append(Result);
-            return result.ToString();
-        }
-
-        public double[] Correlations { get; private set; }
-
-        public int Offset { get; private set; }
-
-        public double Auto { get; private set; }
-
-        public CorrelationResult Result { get; private set; }
-
-        public double[] Signal { get; private set; }
-
-        public double[] Pattern { get; private set; }
     }
 }

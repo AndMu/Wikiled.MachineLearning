@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Wikiled.Arff.Normalization;
-using Wikiled.Core.Utility.Arguments;
+using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
@@ -9,9 +9,12 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
     {
         public event EventHandler<EventArgs> Changed;
 
-        private DataProcessingType normalization;
         private readonly double[] originalData;
+
         private double[] data;
+
+        private DataProcessingType normalization;
+
         private int windowSize = 3;
 
         public DataPointsTransform(double[] originalData, DataProcessingType defaultNormalization = DataProcessingType.None)
@@ -20,6 +23,53 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
             this.originalData = originalData;
             normalization = defaultNormalization;
         }
+
+        public virtual DataProcessingType Normalization
+        {
+            get => normalization;
+            set
+            {
+                normalization = value;
+                DataChanged();
+            }
+        }
+
+        public virtual int WindowSize
+        {
+            get => windowSize;
+            set
+            {
+                if (windowSize == value)
+                {
+                    return;
+                }
+
+                windowSize = value;
+                DataChanged();
+            }
+        }
+
+        public double[] Data => data ?? (data = Calculate());
+
+        public double Maximum
+        {
+            get
+            {
+                return Data.Max(item => item);
+            }
+        }
+
+        public int MaxWindow => originalData.Length;
+
+        public double Minimum
+        {
+            get
+            {
+                return Data.Min(item => item);
+            }
+        }
+
+        public int Total => Data.Length;
 
         protected void DataChanged()
         {
@@ -39,56 +89,6 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
                     return originalData.WeightedMovingAverage(WindowSize).ToArray();
                 default:
                     return originalData;
-            }
-        }
-
-        public double[] Data
-        {
-            get { return data ?? (data = Calculate()); }
-        }
-
-        public double Minimum
-        {
-            get { return Data.Min(item => item); }
-        }
-
-        public double Maximum
-        {
-            get { return Data.Max(item => item); }
-        }
-
-        public int MaxWindow
-        {
-            get { return originalData.Length; }
-        }
-
-        public int Total
-        {
-            get { return Data.Length; }
-        }
-
-        public virtual int WindowSize
-        {
-            get { return windowSize; }
-            set
-            {
-                if (windowSize == value)
-                {
-                    return;
-                }
-
-                windowSize = value;
-                DataChanged();
-            }
-        }
-
-        public virtual DataProcessingType Normalization
-        {
-            get { return normalization; }
-            set
-            {
-                normalization = value;
-                DataChanged();
             }
         }
     }

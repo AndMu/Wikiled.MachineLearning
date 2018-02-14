@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using Wikiled.Arff.Normalization;
-using Wikiled.Core.Utility.Arguments;
+using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {

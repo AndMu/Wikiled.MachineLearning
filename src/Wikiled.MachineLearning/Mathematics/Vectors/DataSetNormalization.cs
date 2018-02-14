@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Wikiled.Arff.Normalization;
-using Wikiled.Core.Utility.Arguments;
+using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {

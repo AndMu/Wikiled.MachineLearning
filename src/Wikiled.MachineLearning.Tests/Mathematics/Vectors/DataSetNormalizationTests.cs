@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Wikiled.Arff.Normalization;
-using Wikiled.Core.Utility.Serialization;
+using Wikiled.Common.Serialization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
@@ -12,19 +12,22 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
     {
         private List<VectorData> vectors;
 
+        private VectorDataFactory vectorDataFactory;
+
         [SetUp]
         public void Setup()
         {
             vectors = new List<VectorData>();
-            vectors.Add(VectorDataFactory.Instance.CreateSimple(NormalizationType.None,
+            vectorDataFactory = new VectorDataFactory();
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
                                                                 new SimpleCell("1", 1000),
                                                                 new SimpleCell("2", 2),
                                                                 new SimpleCell("3", 0.3)));
-            vectors.Add(VectorDataFactory.Instance.CreateSimple(NormalizationType.None,
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
                                                                 new SimpleCell("1", 2000),
                                                                 new SimpleCell("2", 3),
                                                                 new SimpleCell("3", 0.1)));
-            vectors.Add(VectorDataFactory.Instance.CreateSimple(NormalizationType.None,
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
                                                                 new SimpleCell("1", 3000),
                                                                 new SimpleCell("2", 1),
                                                                 new SimpleCell("3", 0.2)));

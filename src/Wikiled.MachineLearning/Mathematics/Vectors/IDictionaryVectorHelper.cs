@@ -4,8 +4,8 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
     {
         void Add(string name, double value);
 
-        VectorData GetFullVector()
-            ;
+        VectorData GetFullVector();
+
         double Total { get; }
     }
 }

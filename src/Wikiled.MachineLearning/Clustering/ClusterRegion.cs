@@ -12,25 +12,13 @@ namespace Wikiled.MachineLearning.Clustering
             StartIndex = start;
         }
 
-        public int EndIndex
-        {
-            get { return StartIndex + Length - 1; }
-        }
+        public int EndIndex => StartIndex + Length - 1;
 
-        public bool IsPositive
-        {
-            get { return Peak > 0; }
-        }
+        public bool IsPositive => Peak > 0;
 
-        public IList<double> Items
-        {
-            get { return items; }
-        }
+        public IList<double> Items => items;
 
-        public int Length
-        {
-            get { return items.Count; }
-        }
+        public int Length => items.Count;
 
         public double Peak { get; private set; }
 

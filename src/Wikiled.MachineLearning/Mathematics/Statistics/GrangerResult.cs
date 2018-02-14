@@ -6,29 +6,32 @@
         {
             Lag = lag;
             X = x;
-            Y= y;
+            Y = y;
             XName = "X";
             YName = "Y";
         }
 
-        public int Lag { get; private set; }
-
-        public double X { get; private set; }
-
-        public double Y { get; private set; }
-
         public double BestValue
         {
-            get { return X > Y ? X : Y; }
+            get
+            {
+                return X > Y ? X : Y;
+            }
         }
+
+        public int Lag { get; }
+
+        public double X { get; }
+
+        public string XName { get; set; }
+
+        public double Y { get; }
+
+        public string YName { get; set; }
 
         public override string ToString()
         {
             return string.Format("Granger Lag: <{0}> {3}: <{1}> {4}: <{2}>", Lag, X, Y, XName, YName);
         }
-
-        public string XName { get; set; }
-
-        public string YName { get; set; }
     }
 }
