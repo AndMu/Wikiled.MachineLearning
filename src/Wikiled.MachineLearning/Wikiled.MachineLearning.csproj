@@ -9,7 +9,7 @@
     <Authors>Wikiled</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Wikiled Machine Learning Utilities</Description>
-	<tags>data-mining, machine-learning</tags>
+    <tags>data-mining, machine-learning</tags>
     <projectUrl>https://github.com/AndMu/Wikiled.MachineLearning</projectUrl>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -35,7 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\alglib2\Alglib2.csproj" />
+    <ProjectReference Include="..\alglib2\Alglib2.csproj">
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
