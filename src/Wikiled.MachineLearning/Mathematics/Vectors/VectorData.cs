@@ -41,6 +41,14 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public VectorCell[] Cells => cells ?? (cells = DataTable.Values.ToArray());
 
+        public Dictionary<int, VectorCell> DataTable
+        {
+            get
+            {
+                return dataTableValues ?? (dataTableValues = normalizedData.Value.ToDictionary(item => item.Index, item => item));
+            }
+        }
+
         public int Length { get; private set; }
 
         public INormalize Normalization => normalization.Value;
@@ -66,18 +74,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                     throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
-                return DataTable.TryGetValue(index, out var outCell)
-                           ? outCell
-                           : new VectorCell(index, new SimpleCell(index.ToString(), 0), 0);
-            }
-        }
-
-        public Dictionary<int, VectorCell> DataTable
-        {
-            get
-            {
-                return dataTableValues ??
-                       (dataTableValues = normalizedData.Value.ToDictionary(item => item.Index, item => item));
+                return DataTable.TryGetValue(index, out var outCell) ? outCell : new VectorCell(index, new SimpleCell(index.ToString(), 0), 0);
             }
         }
 
@@ -132,8 +129,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             NormalizationType normalizationType = NormalizationType.None;
             if (reader.MoveToAttribute("normalization"))
             {
-                normalizationType =
-                    (NormalizationType)Enum.Parse(typeof(NormalizationType), reader.ReadContentAsString());
+                normalizationType = (NormalizationType)Enum.Parse(typeof(NormalizationType), reader.ReadContentAsString());
             }
 
             int length = 0;
@@ -200,25 +196,22 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                 throw new ArgumentOutOfRangeException("length");
             }
 
-            normalization = new Lazy<INormalize>(
-                () => data.Select(item => item.X).Normalize(normalizationType));
+            normalization = new Lazy<INormalize>(() => data.Select(item => item.X).Normalize(normalizationType));
 
             normalizedData = new Lazy<VectorCell[]>(
                 () =>
-                {
-                    var normalized = Normalization
-                        .GetNormalized
-                        .ToArray();
-                    VectorCell[] preparedData = new VectorCell[data.Length];
-
-                    for (int i = 0; i < data.Length; i++)
                     {
-                        preparedData[i] = (VectorCell)data[i].Clone();
-                        preparedData[i].X = normalized[i];
-                    }
+                        var normalized = Normalization.GetNormalized.ToArray();
+                        VectorCell[] preparedData = new VectorCell[data.Length];
 
-                    return preparedData;
-                });
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            preparedData[i] = (VectorCell)data[i].Clone();
+                            preparedData[i].X = normalized[i];
+                        }
+
+                        return preparedData;
+                    });
         }
     }
 }
