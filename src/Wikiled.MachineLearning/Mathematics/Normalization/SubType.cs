@@ -1,5 +1,9 @@
-﻿namespace Wikiled.MachineLearning.Mathematics.Normalization
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Wikiled.MachineLearning.Mathematics.Normalization
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SubType
     {
         NumericX,
