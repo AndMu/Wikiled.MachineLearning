@@ -19,18 +19,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         {
             vectors = new List<VectorData>();
             vectorDataFactory = new VectorDataFactory();
-            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
-                                                                new SimpleCell("1", 1000),
-                                                                new SimpleCell("2", 2),
-                                                                new SimpleCell("3", 0.3)));
-            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
-                                                                new SimpleCell("1", 2000),
-                                                                new SimpleCell("2", 3),
-                                                                new SimpleCell("3", 0.1)));
-            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None,
-                                                                new SimpleCell("1", 3000),
-                                                                new SimpleCell("2", 1),
-                                                                new SimpleCell("3", 0.2)));
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, new SimpleCell("1", 1000), new SimpleCell("2", 2), new SimpleCell("3", 0.3)));
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, new SimpleCell("1", 2000), new SimpleCell("2", 3), new SimpleCell("3", 0.1)));
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, new SimpleCell("1", 3000), new SimpleCell("2", 1), new SimpleCell("3", 0.2)));
         }
 
         [Test]

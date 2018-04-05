@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using Alglib2;
-using Wikiled.MachineLearning.Normalization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
-using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
+using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
     public class OLSMultipleLinearRegression
     {
+        private readonly VectorDataFactory vectorDataFactory = new VectorDataFactory();
+
         private readonly List<VectorData> xVectors = new List<VectorData>();
 
         private readonly double[] yData;
-        
-        private alglib.sparsematrix xData;
 
-        private readonly VectorDataFactory vectorDataFactory = new VectorDataFactory();
+        private alglib.sparsematrix xData;
 
         public OLSMultipleLinearRegression(double[] yData)
         {
@@ -26,15 +24,9 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
 
         public int DataLength => yData.Length;
 
-        public double[] RegressionParameters
-        {
-            get; private set;
-        }
+        public double[] RegressionParameters { get; private set; }
 
-        public double[] Residuals
-        {
-            get;
-        }
+        public double[] Residuals { get; }
 
         public int XColumns => xVectors.Count;
 

@@ -1,41 +1,28 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Wikiled.Arff.Extensions;
 using Wikiled.Arff.Persistence;
-using Wikiled.Arff.Persistence.Headers;
 
 namespace Wikiled.MachineLearning.Normalization
 {
     public static class ArffExtensions
     {
-        public void Normalize(this IArffDataSet dataSet, NormalizationType type)
+        public static IEnumerable<(int? Y, double[] X)> GetDataNormalized(this IArffDataSet dataSet, NormalizationType type)
         {
-            if (dataSet.Normalization != NormalizationType.None)
+            var data = dataSet.GetData();
+            foreach (var item in data)
             {
-                throw new ArgumentOutOfRangeException("type", "Data is already normalized");
-            }
-
-            if (type == NormalizationType.None)
-            {
-                return;
-            }
-
-            dataSet.Normalization = type;
-            foreach (var doc in dataSet.Documents)
-            {
-                var words = doc.GetRecords()
-                               .Where(item => item.Header is NumericHeader)
-                               .ToArray();
-
-                var normalized = words
-                                 .Select(item => Convert.ToDouble(item.Value))
+                if (type == NormalizationType.None)
+                {
+                    yield return item;
+                }
+                
+                var normalized = item.X
                                  .Normalize(type)
                                  .GetNormalized
                                  .ToArray();
 
-                for (var i = 0; i < words.Length; i++)
-                {
-                    words[i].Value = normalized[i];
-                }
+                yield return (item.Y, normalized);
             }
         }
     }

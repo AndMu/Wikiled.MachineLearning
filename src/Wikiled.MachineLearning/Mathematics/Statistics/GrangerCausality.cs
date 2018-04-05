@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using Alglib2;
 using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
