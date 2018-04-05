@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Wikiled.MachineLearning.Mathematics.Normalization;
+using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Normalization
 {

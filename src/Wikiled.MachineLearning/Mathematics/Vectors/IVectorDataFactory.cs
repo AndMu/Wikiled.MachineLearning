@@ -1,4 +1,5 @@
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
+using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {

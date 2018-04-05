@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Wikiled.MachineLearning.Mathematics.Normalization
+namespace Wikiled.MachineLearning.Normalization
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SubType

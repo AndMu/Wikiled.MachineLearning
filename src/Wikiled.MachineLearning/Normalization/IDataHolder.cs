@@ -1,4 +1,4 @@
-﻿namespace Wikiled.MachineLearning.Mathematics.Normalization
+﻿namespace Wikiled.MachineLearning.Normalization
 {
     public interface IDataHolder
     {

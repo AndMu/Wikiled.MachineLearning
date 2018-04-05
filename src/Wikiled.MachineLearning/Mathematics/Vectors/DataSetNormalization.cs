@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
 using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors

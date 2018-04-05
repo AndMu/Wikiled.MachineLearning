@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Wikiled.MachineLearning.Mathematics.Normalization
+namespace Wikiled.MachineLearning.Normalization
 {
     public class Standardizer
     {

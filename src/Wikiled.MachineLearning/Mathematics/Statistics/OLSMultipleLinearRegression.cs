@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wikiled.Arff.Normalization;
+using Alglib2;
+using Wikiled.MachineLearning.Normalization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
+using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {

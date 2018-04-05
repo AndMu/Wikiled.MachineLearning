@@ -6,8 +6,11 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
 using Wikiled.Common.Arguments;
+using Wikiled.MachineLearning.Normalization;
+using INormalize = Wikiled.MachineLearning.Normalization.INormalize;
+using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {

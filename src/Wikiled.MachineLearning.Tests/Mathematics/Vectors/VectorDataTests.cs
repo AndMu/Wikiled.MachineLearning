@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 using NUnit.Framework;
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
 using Wikiled.Common.Serialization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 

@@ -1,6 +1,6 @@
 ﻿using Wikiled.Common.Arguments;
 
-namespace Wikiled.MachineLearning.Mathematics.Normalization
+namespace Wikiled.MachineLearning.Normalization
 {
     public class DataHolder : IDataHolder
     {

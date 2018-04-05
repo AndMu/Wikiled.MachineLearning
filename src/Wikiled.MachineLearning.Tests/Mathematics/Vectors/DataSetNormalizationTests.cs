@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
 using Wikiled.Common.Serialization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 

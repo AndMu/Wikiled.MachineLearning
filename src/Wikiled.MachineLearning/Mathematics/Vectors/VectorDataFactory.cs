@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Wikiled.Arff.Normalization;
+using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
