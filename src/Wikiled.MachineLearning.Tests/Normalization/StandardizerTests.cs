@@ -1,6 +1,8 @@
 using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Wikiled.Arff.Extensions;
+using Wikiled.Arff.Persistence;
 using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Normalization
@@ -49,6 +51,37 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Normalization
             {
                 Assert.AreEqual(1, Math.Round(result[0][2], 2));
             }
+        }
+
+        [Test]
+        public void GetStandardizer()
+        {
+            var dataset = ArffDataSet.CreateSimple("Test");
+            var document = dataset.AddDocument();
+            document.AddRecord("T_One").Value = 1;
+            document.AddRecord("T_Two").Value = 2;
+            document.AddRecord("Three").Value = 2;
+
+            document = dataset.AddDocument();
+            document.AddRecord("T_One").Value = 1;
+            document.AddRecord("T_Two").Value = 2;
+            document.AddRecord("Three").Value = 2;
+
+            document = dataset.AddDocument();
+            document.AddRecord("T_One").Value = 2;
+            document.AddRecord("T_Two").Value = 1;
+            document.AddRecord("Three").Value = 1;
+
+            document = dataset.AddDocument();
+            document.AddRecord("T_One").Value = 2;
+            document.AddRecord("T_Two").Value = 1;
+            document.AddRecord("Three").Value = 1;
+
+            var data = dataset.GetRawData();
+            var result = Standardizer.GetNumericStandardizer(data).StandardizeAll(data);
+            Assert.AreEqual(3, result[0].Length);
+            Assert.AreEqual(-1, Math.Round(result[0][0], 2));
+            Assert.AreEqual(1, Math.Round(result[0][1], 2));
         }
 
         private static void CheckData(double[][] result)
