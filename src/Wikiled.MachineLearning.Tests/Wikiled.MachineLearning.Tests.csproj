@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>NET471</TargetFramework>
@@ -6,12 +6,14 @@
 
   <PropertyGroup>
     <AssemblyName>Wikiled.MachineLearning.Tests</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Authors>Wikiled</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.5.6" />
     <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Wikiled.Common" Version="1.0.11" />
     <PackageReference Include="Wikiled.Arff" Version="2.1.2" />
@@ -31,8 +33,9 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
+  <Target Name="ForceGenerationOfBindingRedirects" AfterTargets="ResolveAssemblyReferences" BeforeTargets="GenerateBindingRedirects" Condition="'$(AutoGenerateBindingRedirects)' == 'true'">
+    <PropertyGroup>
+      <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    </PropertyGroup>
+  </Target>
 </Project>
