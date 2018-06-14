@@ -1,21 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
+using Wikiled.Common.Arguments;
+using Wikiled.Common.Extensions;
 
 namespace Wikiled.MachineLearning.Mathematics
 {
     /// <summary>
-    /// Convert to Radians.
+    ///     Convert to Radians.
     /// </summary>
     /// <returns>The value in radians</returns>
     public static class NumericExtensions
     {
-        public static double ToRadians(this double degrees)
+        public static Vector2 GetMonthVector(this DateTime date)
         {
-            return Math.PI * degrees / 180;
+            var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
+            var degrees = GetDegrees(date.Day, daysInMonth);
+            return GetVectorByDegrees(degrees);
         }
 
         public static Vector2 GetVector(this double degrees)
         {
+            return GetVectorByDegrees(degrees);
+        }
+
+        public static Vector2 GetWeekVector(this DateTime date)
+        {
+            var degrees = GetDegrees((int)date.DayOfWeek, 7);
             return GetVectorByDegrees(degrees);
         }
 
@@ -26,23 +38,27 @@ namespace Wikiled.MachineLearning.Mathematics
             return GetVectorByDegrees(degrees);
         }
 
-        public static Vector2 GetWeekVector(this DateTime date)
+        public static IEnumerable<T[]> Shuffle<T>(this Random random, params T[][] arrays)
         {
-            var degrees = GetDegrees(((int)date.DayOfWeek), 7);
-            return GetVectorByDegrees(degrees);
+            Guard.NotNull(() => random, random);
+            Guard.NotNull(() => arrays, arrays);
+            if (arrays.Length < 1 ||
+                arrays.Any(item => item.Length != arrays[0].Length))
+            {
+                throw new ArgumentOutOfRangeException(nameof(arrays));
+            }
+
+            var indexes = Enumerable.Range(0, arrays[0].Length).ToList();
+            var shuffled = indexes.Shuffle(random).ToArray();
+            foreach (var array in arrays)
+            {
+                yield return shuffled.Select(index => array[index]).ToArray();
+            }
         }
 
-        public static Vector2 GetMonthVector(this DateTime date)
+        public static double ToRadians(this double degrees)
         {
-            var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
-            var degrees = GetDegrees(date.Day, daysInMonth);
-            return GetVectorByDegrees(degrees);
-        }
-
-        private static Vector2 GetVectorByDegrees(double degrees)
-        {
-            var radians = degrees.ToRadians();
-            return new Vector2((float)Math.Sin(radians), (float)Math.Cos(radians));
+            return Math.PI * degrees / 180;
         }
 
         private static double GetDegrees(int value, int total)
@@ -50,5 +66,10 @@ namespace Wikiled.MachineLearning.Mathematics
             return 360 * value / (double)total;
         }
 
+        private static Vector2 GetVectorByDegrees(double degrees)
+        {
+            var radians = degrees.ToRadians();
+            return new Vector2((float)Math.Sin(radians), (float)Math.Cos(radians));
+        }
     }
 }

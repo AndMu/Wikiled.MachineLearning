@@ -11,13 +11,7 @@
             YName = "Y";
         }
 
-        public double BestValue
-        {
-            get
-            {
-                return X > Y ? X : Y;
-            }
-        }
+        public double BestValue => X > Y ? X : Y;
 
         public int Lag { get; }
 

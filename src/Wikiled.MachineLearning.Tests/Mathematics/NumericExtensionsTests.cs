@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
 using NUnit.Framework;
 using Wikiled.MachineLearning.Mathematics;
@@ -25,7 +26,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             new object[] {new DateTime(1978, 03, 04), -0.78, 0.62},
         };
 
-        private static readonly object[] datesMonths=
+        private static readonly object[] datesMonths =
         {
             new object[] {new DateTime(1978, 01, 01), 0.2, 0.98},
             new object[] {new DateTime(1978, 02, 28), 0, 1},
@@ -50,7 +51,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         {
             Vector2 result = NumericExtensions.GetVector(degrees);
             Assert.AreEqual(x, Math.Round(result.X, 2));
-            Assert.AreEqual(y,  Math.Round(result.Y, 2));
+            Assert.AreEqual(y, Math.Round(result.Y, 2));
         }
 
         [Test, TestCaseSource("dates")]
@@ -75,6 +76,29 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Vector2 result = NumericExtensions.GetMonthVector(date);
             Assert.AreEqual(x, Math.Round(result.X, 2));
             Assert.AreEqual(y, Math.Round(result.Y, 2));
+        }
+
+        [Test]
+        public void Shuffle()
+        {
+            var data1 = Enumerable.Range(0, 100).ToArray();
+            var data2 = Enumerable.Range(0, 100).ToArray();
+            var result = new Random().Shuffle(data1, data2).ToArray();
+            Assert.AreEqual(2, result.Length);
+            Assert.AreEqual(100, result[0].Length);
+            for (int i = 0; i < result[0].Length; i++)
+            {
+                Assert.AreEqual(result[0][i], result[1][i]);
+            }
+        }
+
+        [Test]
+        public void ShuffleArgument()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle<double>().ToArray());
+            var data1 = Enumerable.Range(0, 100).ToArray();
+            var data2 = Enumerable.Range(0, 10).ToArray();
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle(data2, data1).ToArray());
         }
     }
 }
