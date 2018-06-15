@@ -38,7 +38,7 @@ namespace Wikiled.MachineLearning.Mathematics
             return GetVectorByDegrees(degrees);
         }
 
-        public static IEnumerable<T[]> Shuffle<T>(this Random random, params T[][] arrays)
+        public static IEnumerable<Array> Shuffle(this Random random, params Array[] arrays)
         {
             Guard.NotNull(() => random, random);
             Guard.NotNull(() => arrays, arrays);
@@ -52,7 +52,7 @@ namespace Wikiled.MachineLearning.Mathematics
             var shuffled = indexes.Shuffle(random).ToArray();
             foreach (var array in arrays)
             {
-                yield return shuffled.Select(index => array[index]).ToArray();
+                yield return shuffled.Select(index => array.GetValue(index)).ToArray();
             }
         }
 
