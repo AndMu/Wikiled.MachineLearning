@@ -88,14 +88,16 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Assert.AreEqual(100, result[0].Length);
             for (int i = 0; i < result[0].Length; i++)
             {
-                Assert.AreEqual(result[0][i], result[1][i]);
+                var arrayOne = result[0].Cast<int>().ToArray();
+                var arrayTwo = result[1].Cast<int>().ToArray();
+                Assert.AreEqual(arrayOne[i], arrayTwo[i]);
             }
         }
 
         [Test]
         public void ShuffleArgument()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle<double>().ToArray());
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle().ToArray());
             var data1 = Enumerable.Range(0, 100).ToArray();
             var data2 = Enumerable.Range(0, 10).ToArray();
             Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle(data2, data1).ToArray());
