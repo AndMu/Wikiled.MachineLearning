@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    public class VectorCell : IXmlSerializable, ICloneable
+    public class VectorCell : ICloneable
     {
         private double? xAdjusted;
 
@@ -24,11 +20,11 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public double Calculated => X * Theta;
 
-        public ICell Data { get; private set; }
+        public ICell Data { get; }
 
-        public int Index { get; private set; }
+        public int Index { get; }
 
-        public double Theta { get; private set; }
+        public double Theta { get; }
 
         public double X { get => xAdjusted ?? Data.Value; set => xAdjusted = value; }
 
@@ -42,50 +38,6 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             var cloned = new VectorCell(Index, (ICell)Data.Clone(), Theta);
             cloned.xAdjusted = xAdjusted;
             return cloned;
-        }
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            if (!reader.MoveToAttribute("index"))
-            {
-                throw new SerializationException("Can't find <index> attribute");
-            }
-
-            Index = reader.ReadContentAsInt();
-            if (!reader.MoveToAttribute("name"))
-            {
-                throw new SerializationException("Can't find <name> attribute");
-            }
-
-            string name = reader.ReadContentAsString();
-            if (!reader.MoveToAttribute("value"))
-            {
-                throw new SerializationException("Can't find <value> attribute");
-            }
-
-            double value = reader.ReadContentAsDouble();
-            Data = new SimpleCell(name, value);
-            if (!reader.MoveToAttribute("theta"))
-            {
-                throw new SerializationException("Can't find <theta> attribute");
-            }
-
-            Theta = reader.ReadContentAsDouble();
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteStartElement("cell");
-            writer.WriteAttributeString("index", Index.ToString());
-            writer.WriteAttributeString("name", Data.Name);
-            writer.WriteAttributeString("value", Data.Value.ToString());
-            writer.WriteAttributeString("theta", Theta.ToString());
-            writer.WriteEndElement();
         }
     }
 }

@@ -15,16 +15,21 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             index = -1;
         }
 
+        public VectorCell Current => index < 0 ? null : vector[index];
+
+        object IEnumerator.Current => Current;
+
         public void Dispose()
         {
         }
 
         public bool MoveNext()
         {
-            if (index >= (vector.Length - 1))
+            if (index >= vector.Length - 1)
             {
                 return false;
             }
+
             index++;
             return true;
         }
@@ -33,9 +38,5 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
         {
             index = -1;
         }
-
-        public VectorCell Current => index < 0 ? null : vector[index];
-
-        object IEnumerator.Current => Current;
     }
 }

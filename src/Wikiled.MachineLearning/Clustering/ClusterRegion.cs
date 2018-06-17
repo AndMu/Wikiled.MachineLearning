@@ -22,7 +22,7 @@ namespace Wikiled.MachineLearning.Clustering
 
         public double Peak { get; private set; }
 
-        public int StartIndex { get; private set; }
+        public int StartIndex { get; }
 
         public void Add(double item)
         {

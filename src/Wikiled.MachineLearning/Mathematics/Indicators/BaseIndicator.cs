@@ -50,7 +50,7 @@ namespace Wikiled.MachineLearning.Mathematics.Indicators
 
         public TResult Value { get; protected set; }
 
-        protected Queue<T> Results { get; private set; }
+        protected Queue<T> Results { get; }
 
         public virtual TResult Add(T value)
         {

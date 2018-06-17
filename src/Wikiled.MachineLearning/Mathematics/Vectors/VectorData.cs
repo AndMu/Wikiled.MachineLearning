@@ -3,15 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Xml.Schema;
-using System.Xml.Serialization;
 using Wikiled.Common.Arguments;
 using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    public class VectorData : IEnumerable<VectorCell>, IXmlSerializable
+    public class VectorData : IEnumerable<VectorCell>
     {
         private VectorCell[] cells;
 
@@ -49,13 +47,15 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
         }
 
+        public string Name { get; set; }
+
         public int Length { get; private set; }
 
         public INormalize Normalization => normalization.Value;
 
         public VectorCell[] OriginalCells { get; private set; }
 
-        public double RHO { get; private set; }
+        public double RHO { get; }
 
         public double[] ValueCellsX
         {
@@ -124,60 +124,6 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
         }
 
-        public void ReadXml(XmlReader reader)
-        {
-            NormalizationType normalizationType = NormalizationType.None;
-            if (reader.MoveToAttribute("normalization"))
-            {
-                normalizationType = (NormalizationType)Enum.Parse(typeof(NormalizationType), reader.ReadContentAsString());
-            }
-
-            int length = 0;
-            if (reader.MoveToAttribute("length"))
-            {
-                length = reader.ReadContentAsInt();
-            }
-
-            if (reader.MoveToAttribute("rho"))
-            {
-                RHO = reader.ReadContentAsDouble();
-            }
-
-            List<VectorCell> vectorCells = new List<VectorCell>();
-            reader.MoveToContent();
-            if (reader.ReadToDescendant("cells") &&
-                reader.ReadToDescendant("cell"))
-            {
-                do
-                {
-                    VectorCell cell = new VectorCell();
-                    cell.ReadXml(reader);
-                    vectorCells.Add(cell);
-                }
-                while (reader.ReadToNextSibling("cell"));
-
-                reader.ReadEndElement();
-            }
-
-            reader.ReadEndElement();
-            Init(vectorCells.ToArray(), length, normalizationType);
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteAttributeString("normalization", Normalization.Type.ToString());
-            writer.WriteAttributeString("length", Length.ToString());
-            writer.WriteAttributeString("rho", RHO.ToString());
-
-            writer.WriteStartElement("cells");
-            foreach (var cell in DataTable)
-            {
-                cell.Value.WriteXml(writer);
-            }
-
-            writer.WriteEndElement();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -191,13 +137,12 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             OriginalCells = data;
             Length = length;
             if (data.Length > Length ||
-                data.Length > 0 && data.Max(item => item.Index) >= Length)
+                (data.Length > 0 && data.Max(item => item.Index) >= Length))
             {
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
             }
 
             normalization = new Lazy<INormalize>(() => data.Select(item => item.X).Normalize(normalizationType));
-
             normalizedData = new Lazy<VectorCell[]>(
                 () =>
                     {
