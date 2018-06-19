@@ -25,17 +25,6 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         }
 
         [Test]
-        public void Serialize()
-        {
-            var document = vectors.XmlSerialize();
-            Assert.IsNotNull(document);
-            var result = document.XmlDeserialize<List<VectorData>>();
-            Assert.AreEqual(3, result.Count);
-            Assert.AreEqual(3, result[0].Length);
-            Assert.AreEqual(1000, result[0][0].Calculated);
-        }
-
-        [Test]
         public void MeanNormalize()
         {
             DataSetNormalization.MeanNormalize(vectors.ToArray());

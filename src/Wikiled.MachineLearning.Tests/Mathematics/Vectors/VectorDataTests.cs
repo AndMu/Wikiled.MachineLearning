@@ -81,32 +81,6 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         }
 
         [Test]
-        public void MultiSerialize()
-        {
-            var vector1 = new VectorData(
-                new[]
-                    {
-                        new VectorCell(0, new SimpleCell("1", 1), 1),
-                        new VectorCell(3, new SimpleCell("1", 1), 1)
-                    },
-                4,
-                0,
-                NormalizationType.Elastic);
-            var vector2 = new VectorData(
-                new[]
-                    {
-                        new VectorCell(0, new SimpleCell("1", 1), 1),
-                        new VectorCell(3, new SimpleCell("1", 1), 1)
-                    },
-                4,
-                0,
-                NormalizationType.Elastic);
-            new[] { vector1, vector2 }.XmlSerialize().Save("vectorArray.xml");
-            var recovered = XDocument.Load("vectorArray.xml").XmlDeserialize<VectorData[]>();
-            Assert.AreEqual(2, recovered.Length);
-        }
-
-        [Test]
         public void NormalizeByCoef()
         {
             var vector = vectorDataFactory.CreateSimple(
@@ -118,29 +92,6 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             Assert.AreEqual(100, vector[0].X);
             Assert.AreEqual(0.2, vector[1].X);
             Assert.AreEqual(0.03, Math.Round(vector[2].X, 2));
-        }
-
-        [Test]
-        public void Serialize()
-        {
-            var vector = new VectorData(
-                new[]
-                    {
-                        new VectorCell(0, new SimpleCell("1", 1), 1),
-                        new VectorCell(3, new SimpleCell("1", 1), 1)
-                    },
-                4,
-                0,
-                NormalizationType.Elastic);
-
-            vector.XmlSerialize().Save("vector.xml");
-            var recovered = XDocument.Load("vector.xml").XmlDeserialize<VectorData>();
-            Assert.AreEqual(vector.Length, recovered.Length);
-            Assert.AreEqual(vector.RHO, recovered.RHO);
-            Assert.AreEqual(vector.Normalization.Type, recovered.Normalization.Type);
-            Assert.AreEqual(vector.ValueCellsX.Length, recovered.ValueCellsX.Length);
-            Assert.AreEqual(vector.ValueCellsX[0], recovered.ValueCellsX[0]);
-            Assert.AreEqual(vector.ValueCellsX[1], recovered.ValueCellsX[1]);
         }
     }
 }
