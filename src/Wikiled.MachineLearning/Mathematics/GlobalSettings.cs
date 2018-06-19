@@ -4,6 +4,12 @@ namespace Wikiled.MachineLearning.Mathematics
 {
     public static class GlobalSettings
     {
-        public static Random Random => new Random();
+        private static Random random;
+
+        public static Random Random
+        {
+            get => random ?? (random = new Random());
+            set => random = value;
+        }
     }
 }
