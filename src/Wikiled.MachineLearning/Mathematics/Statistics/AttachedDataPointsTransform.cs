@@ -1,5 +1,4 @@
 ﻿using System;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
@@ -10,8 +9,7 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
         public AttachedDataPointsTransform(DataPointsTransform parent, double[] originalData)
             : base(originalData)
         {
-            Guard.NotNull(() => parent, parent);
-            this.parent = parent;
+            this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
             parent.Changed += ParentChanged;
         }
 

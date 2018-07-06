@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Wikiled.MachineLearning.Normalization;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
@@ -9,7 +8,11 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
     {
         public static void MeanNormalize(VectorData[] vectors)
         {
-            Guard.NotNull(() => vectors, vectors);
+            if (vectors == null)
+            {
+                throw new ArgumentNullException(nameof(vectors));
+            }
+
             if (vectors.Length == 0)
             {
                 return;

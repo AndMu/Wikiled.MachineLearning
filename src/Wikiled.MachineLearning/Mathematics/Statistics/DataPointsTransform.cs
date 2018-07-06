@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Wikiled.MachineLearning.Normalization;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
@@ -19,7 +18,11 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
 
         public DataPointsTransform(double[] originalData, DataProcessingType defaultNormalization = DataProcessingType.None)
         {
-            Guard.NotEmpty(() => originalData, originalData);
+            if (originalData.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(originalData));
+            }
+
             this.originalData = originalData;
             normalization = defaultNormalization;
         }

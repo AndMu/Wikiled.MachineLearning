@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Wikiled.Common.Arguments;
 using Wikiled.Common.Extensions;
 
 namespace Wikiled.MachineLearning.Mathematics
@@ -40,8 +39,16 @@ namespace Wikiled.MachineLearning.Mathematics
 
         public static IEnumerable<Array> Shuffle(this Random random, params Array[] arrays)
         {
-            Guard.NotNull(() => random, random);
-            Guard.NotNull(() => arrays, arrays);
+            if (random == null)
+            {
+                throw new ArgumentNullException(nameof(random));
+            }
+
+            if (arrays == null)
+            {
+                throw new ArgumentNullException(nameof(arrays));
+            }
+
             if (arrays.Length < 1 ||
                 arrays.Any(item => item.Length != arrays[0].Length))
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wikiled.Common.Arguments;
 using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
@@ -11,8 +10,12 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public void AddToDictionary(string name)
         {
-            Guard.NotNullOrEmpty(() => name, name);
-            if (!table.TryGetValue(name, out var existingValue))
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(name));
+            }
+
+            if (!table.TryGetValue(name, out _))
             {
                 table[name] = table.Count;
             }
@@ -20,7 +23,11 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public VectorData GetFullVector(params string[] words)
         {
-            Guard.NotNull(() => words, words);
+            if (words == null)
+            {
+                throw new ArgumentNullException(nameof(words));
+            }
+
             List<VectorCell> cells = new List<VectorCell>();
             foreach (var word in words)
             {

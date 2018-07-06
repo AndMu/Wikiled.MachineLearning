@@ -1,4 +1,5 @@
-using Wikiled.Common.Arguments;
+
+using System;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
@@ -6,9 +7,21 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
     {
         public double Measure(VectorData vector1, VectorData vector2)
         {
-            Guard.NotNull(() => vector1, vector1);
-            Guard.NotNull(() => vector2, vector2);
-            Guard.IsValid(() => vector1, vector1, item => vector1.Length == vector2.Length, "verctors length doesn't match");
+            if (vector1 == null)
+            {
+                throw new ArgumentNullException(nameof(vector1));
+            }
+
+            if (vector2 == null)
+            {
+                throw new ArgumentNullException(nameof(vector2));
+            }
+
+            if (vector1.Length != vector2.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vector1), "vectors length doesn't match");
+            }
+
             return Calculate(vector1, vector2);
         }
 

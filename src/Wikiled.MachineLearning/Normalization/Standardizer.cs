@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Wikiled.Arff.Persistence;
-using Wikiled.Arff.Persistence.Headers;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Normalization
 {
@@ -61,7 +58,11 @@ namespace Wikiled.MachineLearning.Normalization
 
         public static Standardizer CreateStandardizer(string[][] values, ColumnType[] types, bool lastColumnY)
         {
-            Guard.NotNull(() => values, values);
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             DataHolder[][] holders = new DataHolder[values.Length][];
             for (int i = 0; i < values.Length; i++)
             {
@@ -77,7 +78,11 @@ namespace Wikiled.MachineLearning.Normalization
 
         public static Standardizer GetNumericStandardizer(double[][] values, bool lastColumnY = false)
         {
-            Guard.NotNull(() => values, values);
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             return new Standardizer(values.Select(item => item.Select(subItem => new DoubleDataHolder(subItem)).ToArray()).ToArray(), lastColumnY);
         }
 

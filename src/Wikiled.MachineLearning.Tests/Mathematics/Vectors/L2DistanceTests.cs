@@ -71,7 +71,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentException>(() => instance.Measure(vector1, vector2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentException>(() => instance.Measure(vector1, vector2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]

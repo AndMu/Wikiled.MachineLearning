@@ -1,4 +1,5 @@
-﻿using Wikiled.Common.Arguments;
+﻿
+using System;
 
 namespace Wikiled.MachineLearning.Normalization
 {
@@ -6,7 +7,11 @@ namespace Wikiled.MachineLearning.Normalization
     {
         public DataHolder(string text, ColumnType type)
         {
-            Guard.NotNullOrEmpty(() => text, text);
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(text));
+            }
+
             Text = text;
             Type = type;
         }

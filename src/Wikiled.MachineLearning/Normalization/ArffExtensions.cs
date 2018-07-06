@@ -4,7 +4,6 @@ using System.Linq;
 using Wikiled.Arff.Extensions;
 using Wikiled.Arff.Persistence;
 using Wikiled.Arff.Persistence.Headers;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Normalization
 {
@@ -31,7 +30,11 @@ namespace Wikiled.MachineLearning.Normalization
 
         public static double[][] GetRawData(this IArffDataSet dataset, Func<DataRecord, double> getValue = null, Func<IHeader, bool> include = null)
         {
-            Guard.NotNull(() => dataset, dataset);
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
+
             if (getValue == null)
             {
                 getValue = item =>

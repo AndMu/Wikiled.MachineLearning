@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using Wikiled.Common.Arguments;
 
 namespace Wikiled.MachineLearning.Mathematics.Statistics
 {
@@ -16,7 +15,11 @@ namespace Wikiled.MachineLearning.Mathematics.Statistics
         /// <returns>p-value of TestGranger causality</returns>
         public static double TestGranger(double[] x, double[] y, int lag)
         {
-            Guard.IsValid(() => lag, lag, item => item >= 1, "lag, should be 1 or greater");
+            if (lag <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(lag), "lag, should be 1 or greater");
+            }
+
             var yData = y.Skip(lag).ToArray();
             var n = yData.Length;
 

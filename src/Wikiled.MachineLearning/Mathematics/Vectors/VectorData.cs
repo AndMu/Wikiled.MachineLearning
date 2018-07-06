@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Schema;
-using Wikiled.Common.Arguments;
 using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
@@ -131,10 +130,9 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         private void Init(VectorCell[] data, int length, NormalizationType normalizationType)
         {
-            Guard.NotNull(() => data, data);
             dataTableValues = null;
             cells = null;
-            OriginalCells = data;
+            OriginalCells = data ?? throw new ArgumentNullException(nameof(data));
             Length = length;
             if (data.Length > Length ||
                 (data.Length > 0 && data.Max(item => item.Index) >= Length))

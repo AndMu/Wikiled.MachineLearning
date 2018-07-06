@@ -1,4 +1,5 @@
-﻿using Wikiled.Common.Arguments;
+﻿
+using System;
 
 namespace Wikiled.MachineLearning.Mathematics
 {
@@ -18,8 +19,12 @@ namespace Wikiled.MachineLearning.Mathematics
 
         public void Add(double expected, double? actual)
         {
+            if (expected <= 0 || expected > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(expected));
+            }
+
             StatisticsCalculator calculator;
-            Guard.IsValid(() => expected, expected, item => item >= 1 && item <= 5, "expected");
             if (expected > 4.5)
             {
                 calculator = FiveStar;

@@ -18,7 +18,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         [Test]
         public void Arguments()
         {
-            Assert.Throws<ArgumentNullException>(() => instance.AddToDictionary(null));
+            Assert.Throws<ArgumentException>(() => instance.AddToDictionary(null));
             Assert.Throws<ArgumentNullException>(() => instance.GetFullVector(null));
         }
 
