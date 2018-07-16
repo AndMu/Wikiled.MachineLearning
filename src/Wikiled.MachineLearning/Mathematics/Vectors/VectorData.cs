@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Schema;
 using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
@@ -38,6 +37,8 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public VectorCell[] Cells => cells ?? (cells = DataTable.Values.ToArray());
 
+        public double[] Values => Cells.Select(item => item.Calculated).ToArray();
+
         public Dictionary<int, VectorCell> DataTable
         {
             get
@@ -55,15 +56,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
         public VectorCell[] OriginalCells { get; private set; }
 
         public double RHO { get; }
-
-        public double[] ValueCellsX
-        {
-            get
-            {
-                return OriginalCells.Select(item => item.X).ToArray();
-            }
-        }
-
+     
         public VectorCell this[int index]
         {
             get
@@ -110,11 +103,6 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             return new VectorDataEnumerator(this);
         }
 
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
         public void NormalizeByCoef(double coef)
         {
             foreach (VectorCell vectorCell in Cells)
@@ -149,8 +137,10 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
                         for (int i = 0; i < data.Length; i++)
                         {
-                            preparedData[i] = (VectorCell)data[i].Clone();
-                            preparedData[i].X = normalized[i];
+                            var existing = data[i];
+                            var current = new VectorCell(existing.Index, (ICell)existing.Data.Clone(), 1);
+                            current.X = normalized[i];
+                            preparedData[i] = current;
                         }
 
                         return preparedData;
