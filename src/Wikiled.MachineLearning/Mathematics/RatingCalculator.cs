@@ -31,6 +31,16 @@ namespace Wikiled.MachineLearning.Mathematics
 
         public static double Calculate(double positive, double negative)
         {
+            if (positive < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(positive));
+            }
+
+            if (negative < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(negative));
+            }
+
             int coefficient = 2;
             if (positive == 0 &&
                 negative == 0)
