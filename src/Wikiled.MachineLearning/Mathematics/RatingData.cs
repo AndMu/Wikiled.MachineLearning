@@ -30,9 +30,9 @@ namespace Wikiled.MachineLearning.Mathematics
             }
         }
 
-        public double Negative { get; set; }
+        public double Negative { get; private set; }
 
-        public double Positive { get; set; }
+        public double Positive { get; private set; }
 
         public double? RawRating
         {
@@ -47,6 +47,38 @@ namespace Wikiled.MachineLearning.Mathematics
             get => RatingCalculator.CalculateStarsRating(RawRating);
             set
             {
+            }
+        }
+
+        public void AddPositive(double sentiment)
+        {
+            if (sentiment < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sentiment));
+            }
+
+            Positive += sentiment;
+        }
+
+        public void AddNegative(double sentiment)
+        {
+            if (sentiment < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sentiment));
+            }
+
+            Negative += sentiment;
+        }
+
+        public void AddSetiment(double sentiment)
+        {
+            if (sentiment > 0)
+            {
+                AddPositive(sentiment);
+            }
+            else
+            {
+                AddNegative(Math.Abs(sentiment));
             }
         }
 
