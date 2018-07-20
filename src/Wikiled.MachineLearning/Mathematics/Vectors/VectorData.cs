@@ -37,7 +37,22 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         public VectorCell[] Cells => cells ?? (cells = DataTable.Values.ToArray());
 
-        public double[] Values => Cells.Select(item => item.Calculated).ToArray();
+        public double[] SparseValues => Cells.Select(item => item.Calculated).ToArray();
+
+        public double[] FullValues
+        {
+            get
+            {
+                double[] result = new double[Length];
+                for (int i = 0; i < Length; i++)
+                {
+                    DataTable.TryGetValue(i, out var value);
+                    result[i] = value?.Calculated ?? 0;
+                }
+
+                return result;
+            }
+        }
 
         public Dictionary<int, VectorCell> DataTable
         {

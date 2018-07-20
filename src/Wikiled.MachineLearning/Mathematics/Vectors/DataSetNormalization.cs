@@ -20,7 +20,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
             if (vectors.Any(vector => vector.Length != vectors[0].Length))
             {
-                throw new ArgumentOutOfRangeException("vectors", "Vectors should be same lenght");
+                throw new ArgumentOutOfRangeException(nameof(vectors), "Vectors should be same length");
             }
 
             for (int i = 0; i < vectors[0].Length; i++)
