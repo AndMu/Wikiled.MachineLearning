@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Wikiled.MachineLearning.Normalization;
 
@@ -31,7 +32,8 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                 writer.Formatting = Formatting.Indented;
                 int recordId = 0;
                 writer.WriteStartObject();
-                foreach (var record in data)
+                var dataLocal = data.ToArray();
+                foreach (var record in dataLocal)
                 {
                     if (recordId == 0)
                     {
@@ -39,29 +41,37 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                         writer.WriteValue(record.Normalization.Type.ToString());
                         writer.WritePropertyName("Length");
                         writer.WriteValue(record.Length);
+                        if (useName)
+                        {
+                            writer.WritePropertyName("Cells");
+                            writer.WriteStartObject();
+                            Dictionary<string, int> cellTable = new Dictionary<string, int>();
+                            foreach (var vectorData in dataLocal)
+                            {
+                                foreach (var cell in vectorData.Cells)
+                                {
+                                    cellTable[cell.Data.Name] = cell.Index;
+                                }
+                            }
+
+                            foreach (var cell in cellTable.OrderBy(item => item.Value))
+                            {
+                                writer.WritePropertyName(cell.Key);
+                                writer.WriteValue(cell.Value.ToString());
+                            }
+
+                            writer.WriteEndObject();
+                        }
                     }
 
                     writer.WritePropertyName(record.Name ?? recordId.ToString());
                     writer.WriteStartObject();
                     writer.WritePropertyName("Vector");
                     writer.WriteStartObject();
-                    foreach (var cell in record.DataTable)
+                    foreach (var cell in record.DataTable.OrderBy(item => item.Key))
                     {
-                        if (useName)
-                        {
-                            writer.WritePropertyName(cell.Value.Data.Name);
-                            writer.WriteStartObject();
-                            writer.WritePropertyName("Index");
-                            writer.WriteValue(cell.Key.ToString());
-                            writer.WritePropertyName("Value");
-                            writer.WriteValue(cell.Value.Calculated);
-                            writer.WriteEndObject();
-                        }
-                        else
-                        {
-                            writer.WritePropertyName(cell.Key.ToString());
-                            writer.WriteValue(cell.Value.Calculated);
-                        }
+                        writer.WritePropertyName(cell.Key.ToString());
+                        writer.WriteValue(cell.Value.Calculated);
                     }
 
                     writer.WriteEndObject();
@@ -81,6 +91,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                 reader.SupportMultipleContent = true;
                 reader.Read();
                 int records = 0;
+                Dictionary<int, string> indexTable = new Dictionary<int, string>();
                 int totalCellsInt = 0;
                 while (reader.TokenType != JsonToken.EndObject)
                 {
@@ -88,7 +99,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                     {
                         reader.Read();
                     }
-                    
+
                     if (records == 0)
                     {
                         var normalization = ReadPropertyValue(reader, "Normalization");
@@ -97,6 +108,27 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                         if (!int.TryParse(totalCells, out totalCellsInt))
                         {
                             throw new FormatException("Failed to parse cell count value: " + totalCells);
+                        }
+                        
+                        if (useName)
+                        {
+                            ReadProperty(reader);
+                            ReadStart(reader);
+                            while (reader.TokenType != JsonToken.EndObject)
+                            {
+                                ReadProperty(reader);
+                                var key = reader.Value.ToString();
+                                reader.Read();
+                                if (!int.TryParse(reader.Value.ToString(), out var index))
+                                {
+                                    throw new FormatException($"Failed reading index: {key} {reader.Value}");
+                                }
+
+                                indexTable[index] = key;
+                                reader.Read();
+                            }
+
+                            reader.Read();
                         }
                     }
 
@@ -128,24 +160,21 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                         int index = 0;
                         string value;
                         string indexText;
-                        if (!useName)
-                        {
-                            indexText = cellName;
-                            reader.Read();
-                            value = reader.Value.ToString();
-                            reader.Read();
-                        }
-                        else
-                        {
-                            ReadStart(reader);
-                            indexText = ReadPropertyValue(reader, "Index");
-                            value = ReadPropertyValue(reader, "Value");
-                            ReadEnd(reader);
-                        }
-
+                        indexText = cellName;
+                        reader.Read();
+                        value = reader.Value.ToString();
+                        reader.Read();
                         if (!int.TryParse(indexText, out index))
                         {
                             throw new FormatException("Failed to parse cell index: " + index);
+                        }
+
+                        if (useName)
+                        {
+                            if (!indexTable.TryGetValue(index, out cellName))
+                            {
+                                throw new FormatException($"Failed to cell name for index: {index}");
+                            }
                         }
 
                         if (!double.TryParse(value, out var cellValue))
@@ -154,7 +183,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors.Serialization
                         }
 
                         cells.Add(new VectorCell(index, new SimpleCell(cellName, cellValue), 1));
-                        
+
                     }
 
                     yield return new VectorData(cells.ToArray(), totalCellsInt, NormalizationType.None);
