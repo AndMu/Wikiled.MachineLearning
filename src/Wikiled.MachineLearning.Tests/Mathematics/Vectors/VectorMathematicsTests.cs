@@ -18,6 +18,19 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         }
 
         [Test]
+        public void Average()
+        {
+            List<VectorData> vectors = new List<VectorData>();
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 3, 3, 3));
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, -2, 0, 4));
+            vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 2, 3, 2));
+            VectorData sumVector = vectors.ToArray().Average();
+            Assert.AreEqual(1, sumVector[0].X);
+            Assert.AreEqual(2, sumVector[1].X);
+            Assert.AreEqual(3, sumVector[2].X);
+        }
+
+        [Test]
         public void SimpleSum()
         {
             List<VectorData> vectors = new List<VectorData>();

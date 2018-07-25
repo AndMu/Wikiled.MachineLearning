@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wikiled.MachineLearning.Normalization;
+using System.Numerics;
 using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
     public static class VectorMathematics
     {
+        public static VectorData Average(this VectorData[] vectors)
+        {
+            return VectorOperation(
+                vectors,
+                NormalizationType.None,
+                (a, b) => a + b,
+                item => item / vectors.Length);
+        }
+
         public static VectorData Sum(this IEnumerable<VectorData> vectors, NormalizationType normalizationType)
         {
             return VectorOperation(
@@ -29,9 +38,11 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                 (a, b) => a * b).Cells.Select(x => x.X).Sum();
         }
 
-        private static VectorData VectorOperation(IEnumerable<VectorData> vectors,
+        private static VectorData VectorOperation(
+            IEnumerable<VectorData> vectors,
             NormalizationType normalizationType,
-            Func<double, double, double> operation)
+            Func<double, double, double> operation,
+            Func<double, double> final = null)
         {
             Dictionary<int, double> values = new Dictionary<int, double>();
             int vectorID = 0;
@@ -42,8 +53,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                 length = vectorData.Length;
                 foreach (var cell in vectorData.Cells)
                 {
-                    double value;
-                    if (!values.TryGetValue(cell.Index, out value))
+                    if (!values.TryGetValue(cell.Index, out var value))
                     {
                         values[cell.Index] = cell.X;
                     }
@@ -55,7 +65,11 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
 
             var cells = values.OrderBy(item => item.Key)
-                .Select(item => new VectorCell(item.Key, new SimpleCell(item.Key.ToString(), item.Value), 0));
+                .Select(item =>
+                {
+                    var value = final?.Invoke(item.Value) ?? item.Value;
+                    return new VectorCell(item.Key, new SimpleCell(item.Key.ToString(), value), 0);
+                });
             return new VectorData(cells.ToArray(), length, normalizationType);
         }
     }

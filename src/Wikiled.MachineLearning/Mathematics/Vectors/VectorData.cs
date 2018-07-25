@@ -28,9 +28,10 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             : this(data, length, normalizationType)
         {
             RHO = rho;
+            
         }
 
-        public VectorData(VectorCell[] data, int length, NormalizationType normalizationType)
+        public VectorData(VectorCell[] data, int length, NormalizationType normalizationType = NormalizationType.None)
         {
             Init(data, length, normalizationType);
         }
