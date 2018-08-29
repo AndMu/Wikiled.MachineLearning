@@ -28,7 +28,6 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             : this(data, length, normalizationType)
         {
             RHO = rho;
-            
         }
 
         public VectorData(VectorCell[] data, int length, NormalizationType normalizationType = NormalizationType.None)
@@ -154,7 +153,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                         for (int i = 0; i < data.Length; i++)
                         {
                             var existing = data[i];
-                            var current = new VectorCell(existing.Index, (ICell)existing.Data.Clone(), 1);
+                            var current = new VectorCell(existing.Index, (ICell)existing.Data.Clone(), existing.Theta);
                             current.X = normalized[i];
                             preparedData[i] = current;
                         }

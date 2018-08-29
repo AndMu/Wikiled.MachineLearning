@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Linq;
 using NUnit.Framework;
 using Wikiled.MachineLearning.Normalization;
-using Wikiled.Common.Serialization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
@@ -63,6 +61,23 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 NormalizationType.None);
             var data = vector.ToArray();
             Assert.AreEqual(4, data.Length);
+        }
+
+        [TestCase(NormalizationType.None, 2)]
+        [TestCase(NormalizationType.L2, 1.41)]
+        public void ValidateTheta(NormalizationType normalization, double value)
+        {
+            var vector = new VectorData(
+                new[]
+                {
+                    new VectorCell(0, new SimpleCell("1", 1), 2),
+                    new VectorCell(3, new SimpleCell("1", 1), 3)
+                },
+                4,
+                0,
+                normalization);
+            var data = vector.ToArray();
+            Assert.AreEqual(value, Math.Round(data[0].Calculated, 2));
         }
 
         [Test]
