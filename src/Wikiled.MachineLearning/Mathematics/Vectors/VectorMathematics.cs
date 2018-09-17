@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using NormalizationType = Wikiled.MachineLearning.Normalization.NormalizationType;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors

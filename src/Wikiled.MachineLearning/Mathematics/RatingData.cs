@@ -7,13 +7,13 @@ namespace Wikiled.MachineLearning.Mathematics
     {
         public bool HasValue => Positive > 0 || Negative > 0;
 
-        public bool IsPositive => RawRating > 0;
+        public bool? IsPositive => HasValue ? RawRating > 0 : (bool?)null;
 
         public bool IsStrong
         {
             get
             {
-                var difference = Positive - Negative;
+                double difference = Positive - Negative;
                 if (Math.Abs(difference) < 4)
                 {
                     return false;
@@ -25,7 +25,7 @@ namespace Wikiled.MachineLearning.Mathematics
                     return true;
                 }
 
-                var ratio = Positive > Negative ? Positive / Negative : Negative / Positive;
+                double ratio = Positive > Negative ? Positive / Negative : Negative / Positive;
                 return Math.Abs(ratio) >= 2;
             }
         }
@@ -84,8 +84,8 @@ namespace Wikiled.MachineLearning.Mathematics
 
         public static RatingData Accumulate(IEnumerable<RatingData> items)
         {
-            var data = new RatingData();
-            foreach (var ratingData in items)
+            RatingData data = new RatingData();
+            foreach (RatingData ratingData in items)
             {
                 data.Positive += ratingData.Positive;
                 data.Negative += ratingData.Negative;
