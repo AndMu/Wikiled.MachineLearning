@@ -1,6 +1,8 @@
 using Moq;
 using NUnit.Framework;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Wikiled.Common.Utilities.Config;
 using Wikiled.MachineLearning.Mathematics.Tracking;
 
@@ -9,6 +11,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
     [TestFixture]
     public class TrackerTests
     {
+        private ILogger<Tracker> logger;
+
         private Mock<IApplicationConfiguration> mockApplicationConfiguration;
 
         private Tracker instance;
@@ -16,6 +20,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         [SetUp]
         public void SetUp()
         {
+            logger = new NullLogger<Tracker>();
             mockApplicationConfiguration = new Mock<IApplicationConfiguration>();
             instance = CreateTracker();
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 10));
@@ -32,8 +37,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         {
             var result = instance.AverageSentiment();
             Assert.IsNull(result);
-            instance.AddRating(new RatingRecord(new DateTime(2016, 01, 10), 10));
-            instance.AddRating(new RatingRecord(new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), 10));
 
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 11));
             Assert.AreEqual(0, instance.Count());
@@ -43,17 +48,27 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         }
 
         [Test]
+        public void AddSameId()
+        {
+            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            var result = instance.AverageSentiment();
+            Assert.AreEqual(1, instance.Count());
+            Assert.AreEqual(10, result);
+        }
+
+        [Test]
         public void AverageSentiment()
         {
             var result = instance.AverageSentiment();
             Assert.IsNull(result);
-            instance.AddRating(new RatingRecord(new DateTime(2016, 01, 10), 10));
-            instance.AddRating(new RatingRecord(new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), 10));
             result = instance.AverageSentiment();
             Assert.AreEqual(2, instance.Count());
             Assert.AreEqual(10, result);
 
-            instance.AddRating(new RatingRecord(new DateTime(2016, 01, 11), -20));
+            instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -20));
             result = instance.AverageSentiment();
             Assert.AreEqual(3, instance.Count());
             Assert.AreEqual(0, result);
@@ -67,13 +82,14 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentNullException>(() => new Tracker(null));
+            Assert.Throws<ArgumentNullException>(() => new Tracker(logger, null));
+            Assert.Throws<ArgumentNullException>(() => new Tracker(null, mockApplicationConfiguration.Object));
             Assert.AreEqual(0, instance.Count());
         }
         
         private Tracker CreateTracker()
         {
-            return new Tracker(mockApplicationConfiguration.Object);
+            return new Tracker(logger, mockApplicationConfiguration.Object);
         }
     }
 }

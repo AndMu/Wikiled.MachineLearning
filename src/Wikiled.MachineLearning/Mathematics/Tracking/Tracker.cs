@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using Wikiled.Common.Utilities.Config;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
     public class Tracker : ITracker
     {
+        private readonly ILogger<Tracker> logger;
+
         private readonly IApplicationConfiguration config;
 
         private readonly List<RatingRecord> ratings = new List<RatingRecord>();
 
+        private readonly Dictionary<string, RatingRecord> idTable = new Dictionary<string, RatingRecord>();
+
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
-        public Tracker(IApplicationConfiguration config)
+        public Tracker(ILogger<Tracker> logger, IApplicationConfiguration config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void TrimOlder(TimeSpan maxTrack)
@@ -28,6 +34,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
                 foreach (RatingRecord item in ratings.Where(item => item.Date < cutOff).ToArray())
                 {
                     ratings.Remove(item);
+                    idTable.Remove(item.Id);
                 }
             }
             finally
@@ -47,6 +54,13 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             try
             {
                 ratings.Add(record);
+                if (idTable.ContainsKey(record.Id))
+                {
+                    logger.LogWarning("<{0}> key already present. Replacing", record.Id);
+                    ratings.Remove(idTable[record.Id]);
+                }
+
+                idTable[record.Id] = record;
             }
             finally
             {
