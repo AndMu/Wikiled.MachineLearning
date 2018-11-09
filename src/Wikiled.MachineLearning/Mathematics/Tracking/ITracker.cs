@@ -8,6 +8,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         void AddRating(RatingRecord rating);
 
+        bool IsTracked(string id);
+
         double? AverageSentiment(int lastHours = 24);
 
         int Count(bool withSentiment = true, int lastHours = 24);

@@ -43,14 +43,18 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 11));
             Assert.AreEqual(0, instance.Count());
             Assert.AreEqual(2, instance.Count(lastHours: 48));
+            Assert.IsTrue(instance.IsTracked("1"));
             instance.TrimOlder(TimeSpan.FromHours(1));
             Assert.AreEqual(0, instance.Count(lastHours: 48));
+            Assert.IsFalse(instance.IsTracked("1"));
         }
 
         [Test]
         public void AddSameId()
         {
+            Assert.IsFalse(instance.IsTracked("1"));
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            Assert.IsTrue(instance.IsTracked("1"));
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
             var result = instance.AverageSentiment();
             Assert.AreEqual(1, instance.Count());

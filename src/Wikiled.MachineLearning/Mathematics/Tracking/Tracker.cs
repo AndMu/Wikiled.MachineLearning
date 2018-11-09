@@ -68,6 +68,24 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
+        public bool IsTracked(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            _lock.EnterReadLock();
+            try
+            {
+                return idTable.ContainsKey(id);
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
         public double? AverageSentiment(int lastHours = 24)
         {
             _lock.EnterReadLock();
