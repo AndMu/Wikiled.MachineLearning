@@ -67,20 +67,21 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             var result = instance.AverageSentiment();
             Assert.IsNull(result);
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
-            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), null));
             result = instance.AverageSentiment();
-            Assert.AreEqual(2, instance.Count());
+            Assert.AreEqual(1, instance.Count());
+            Assert.AreEqual(2, instance.Count(false));
             Assert.AreEqual(10, result);
 
-            instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -20));
+            instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -10));
             result = instance.AverageSentiment();
-            Assert.AreEqual(3, instance.Count());
+            Assert.AreEqual(2, instance.Count());
             Assert.AreEqual(0, result);
 
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 11));
             result = instance.AverageSentiment();
             Assert.AreEqual(1, instance.Count());
-            Assert.AreEqual(-20, result);
+            Assert.AreEqual(-10, result);
         }
 
         [Test]

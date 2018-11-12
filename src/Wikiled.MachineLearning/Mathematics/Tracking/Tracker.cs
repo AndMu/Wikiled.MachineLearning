@@ -91,7 +91,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             _lock.EnterReadLock();
             try
             {
-                double[] sentiment = GetValues(true, lastHours).ToArray();
+                double[] sentiment = GetValues(true, lastHours).Where(item => item != null).Select(item => item.Value).ToArray();
                 if (sentiment.Length == 0)
                 {
                     return null;
@@ -118,11 +118,11 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
-        private IEnumerable<double> GetValues(bool withSentiment, int lastHours = 24)
+        private IEnumerable<double?> GetValues(bool withSentiment, int lastHours = 24)
         {
             DateTime time = config.Now;
             time = time.AddHours(-lastHours);
-            return ratings.Where(item => (!withSentiment || item.Rating.HasValue) && item.Date > time).Select(item => item.Rating.Value);
+            return ratings.Where(item => (!withSentiment || item.Rating.HasValue) && item.Date > time).Select(item => item.Rating);
         }
     }
 }
