@@ -10,8 +10,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         bool IsTracked(string id);
 
-        double? AverageSentiment(int lastHours = 24);
+        double? CalculateAverageRating(int lastHours = 24);
 
-        int Count(bool withSentiment = true, int lastHours = 24);
+        int Count(bool withRating = true, int lastHours = 24);
     }
 }

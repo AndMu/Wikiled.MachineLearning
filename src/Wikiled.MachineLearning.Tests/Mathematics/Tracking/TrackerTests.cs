@@ -35,7 +35,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         [Test]
         public void TrimOlder()
         {
-            var result = instance.AverageSentiment();
+            var result = instance.CalculateAverageRating();
             Assert.IsNull(result);
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
             instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), 10));
@@ -56,7 +56,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
             Assert.IsTrue(instance.IsTracked("1"));
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
-            var result = instance.AverageSentiment();
+            var result = instance.CalculateAverageRating();
             Assert.AreEqual(1, instance.Count());
             Assert.AreEqual(10, result);
         }
@@ -64,22 +64,22 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         [Test]
         public void AverageSentiment()
         {
-            var result = instance.AverageSentiment();
+            var result = instance.CalculateAverageRating();
             Assert.IsNull(result);
             instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
             instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), null));
-            result = instance.AverageSentiment();
+            result = instance.CalculateAverageRating();
             Assert.AreEqual(1, instance.Count());
             Assert.AreEqual(2, instance.Count(false));
             Assert.AreEqual(10, result);
 
             instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -10));
-            result = instance.AverageSentiment();
+            result = instance.CalculateAverageRating();
             Assert.AreEqual(2, instance.Count());
             Assert.AreEqual(0, result);
 
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 11));
-            result = instance.AverageSentiment();
+            result = instance.CalculateAverageRating();
             Assert.AreEqual(1, instance.Count());
             Assert.AreEqual(-10, result);
         }

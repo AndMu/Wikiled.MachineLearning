@@ -86,7 +86,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
-        public double? AverageSentiment(int lastHours = 24)
+        public double? CalculateAverageRating(int lastHours = 24)
         {
             _lock.EnterReadLock();
             try
@@ -105,12 +105,12 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
-        public int Count(bool withSentiment = true, int lastHours = 24)
+        public int Count(bool withRating = true, int lastHours = 24)
         {
             _lock.EnterReadLock();
             try
             {
-                return GetValues(withSentiment, lastHours).Count();
+                return GetValues(withRating, lastHours).Count();
             }
             finally
             {
