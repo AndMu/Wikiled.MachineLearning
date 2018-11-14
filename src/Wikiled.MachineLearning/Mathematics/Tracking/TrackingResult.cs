@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return $"Average Result: {Average}({TotalMessages})";
+            return $" Average: {Average}({TotalMessages})";
         }
     }
 }
