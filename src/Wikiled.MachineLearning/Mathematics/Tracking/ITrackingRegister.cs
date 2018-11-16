@@ -2,7 +2,7 @@
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
-    public interface IExpireTracking : IDisposable
+    public interface ITrackingRegister : IDisposable
     {
         void Register(ITracker tracker);
     }

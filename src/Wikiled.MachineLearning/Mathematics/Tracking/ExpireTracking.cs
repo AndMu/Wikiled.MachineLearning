@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
-    public class ExpireTracking : IExpireTracking
+    public class ExpireTracking : ITrackingRegister
     {
         private readonly ILogger<ExpireTracking> logger;
 

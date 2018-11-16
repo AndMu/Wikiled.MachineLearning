@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using Wikiled.Common.Utilities.Config;
@@ -17,18 +18,25 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         private readonly Dictionary<string, RatingRecord> idTable = new Dictionary<string, RatingRecord>();
 
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private readonly ReaderWriterLockSlim @lock = new ReaderWriterLockSlim();
 
-        public Tracker(ILogger<Tracker> logger, IApplicationConfiguration config)
+        private readonly Subject<RatingRecord> stream = new Subject<RatingRecord>();
+
+        public Tracker(string name, ILogger<Tracker> logger, IApplicationConfiguration config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public string Name { get; }
+
+        public IObservable<RatingRecord> Ratings => stream;
 
         public void TrimOlder(TimeSpan maxTrack)
         {
             DateTime cutOff = config.Now.Subtract(maxTrack);
-            _lock.EnterWriteLock();
+            @lock.EnterWriteLock();
             try
             {
                 foreach (RatingRecord item in ratings.Where(item => item.Date < cutOff).ToArray())
@@ -39,7 +47,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
             finally
             {
-                _lock.ExitWriteLock();
+                @lock.ExitWriteLock();
             }
         }
 
@@ -50,7 +58,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
                 throw new ArgumentNullException(nameof(record));
             }
 
-            _lock.EnterWriteLock();
+            stream.OnNext(record);
+            @lock.EnterWriteLock();
             try
             {
                 ratings.Add(record);
@@ -64,7 +73,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
             finally
             {
-                _lock.ExitWriteLock();
+                @lock.ExitWriteLock();
             }
         }
 
@@ -75,20 +84,20 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
                 throw new ArgumentNullException(nameof(id));
             }
 
-            _lock.EnterReadLock();
+            @lock.EnterReadLock();
             try
             {
                 return idTable.ContainsKey(id);
             }
             finally
             {
-                _lock.ExitReadLock();
+                @lock.ExitReadLock();
             }
         }
 
         public double? CalculateAverageRating(int lastHours = 24)
         {
-            _lock.EnterReadLock();
+            @lock.EnterReadLock();
             try
             {
                 double[] sentiment = GetValues(true, lastHours).Where(item => item != null).Select(item => item.Value).ToArray();
@@ -101,21 +110,28 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
             finally
             {
-                _lock.ExitReadLock();
+                @lock.ExitReadLock();
             }
         }
 
         public int Count(bool withRating = true, int lastHours = 24)
         {
-            _lock.EnterReadLock();
+            @lock.EnterReadLock();
             try
             {
                 return GetValues(withRating, lastHours).Count();
             }
             finally
             {
-                _lock.ExitReadLock();
+                @lock.ExitReadLock();
             }
+        }
+
+        public void Dispose()
+        {
+            stream.OnCompleted();
+            @lock?.Dispose();
+            stream?.Dispose();
         }
 
         private IEnumerable<double?> GetValues(bool withSentiment, int lastHours = 24)

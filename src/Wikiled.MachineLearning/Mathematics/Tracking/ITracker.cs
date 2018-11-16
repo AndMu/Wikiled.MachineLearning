@@ -2,8 +2,12 @@
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
-    public interface ITracker
+    public interface ITracker : IDisposable
     {
+        string Name { get; }
+
+        IObservable<RatingRecord> Ratings { get; }
+
         void TrimOlder(TimeSpan maxTrack);
 
         void AddRating(RatingRecord rating);
