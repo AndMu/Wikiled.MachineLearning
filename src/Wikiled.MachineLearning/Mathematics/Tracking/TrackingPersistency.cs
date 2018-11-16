@@ -7,16 +7,13 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
     public class TrackingPersistency : IDisposable
     {
-        private TrackingConfiguration configuration;
-
         private readonly CompositeDisposable disposable = new CompositeDisposable();
 
-        private CsvWriter writer;
+        private readonly CsvWriter writer;
 
         public TrackingPersistency(TrackingConfiguration configuration, IRatingStream stream)
         {
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            if (string.IsNullOrEmpty(configuration.Persistency))
+            if (string.IsNullOrEmpty(configuration?.Persistency))
             {
                 throw new ArgumentOutOfRangeException(nameof(configuration.Persistency));
             }
@@ -38,19 +35,18 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
         {
             lock (writer)
             {
-                writer.WriteField("Id");
-                writer.WriteField("Date");
-                writer.WriteField("Type");
-                writer.WriteField("Rating");
+                writer.WriteField(record.Id);
+                writer.WriteField(record.Date);
+                writer.WriteField(tracker.Name);
+                writer.WriteField(record.Rating);
                 writer.NextRecord();
                 writer.Flush();
-
             }
         }
 
         public void Dispose()
         {
-            subscription?.Dispose();
+            disposable?.Dispose();
         }
     }
 }

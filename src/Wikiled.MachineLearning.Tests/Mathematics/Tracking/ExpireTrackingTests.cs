@@ -1,9 +1,9 @@
-using System;
 using Microsoft.Extensions.Logging;
-using Moq;
-using NUnit.Framework;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Reactive.Testing;
+using Moq;
+using NUnit.Framework;
+using System;
 using Wikiled.MachineLearning.Mathematics.Tracking;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
@@ -27,7 +27,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             tracker = new Mock<ITracker>();
             scheduler = new TestScheduler();
             logger = new NullLogger<ExpireTracking>();
-            trackingConfiguration = new TrackingConfiguration(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
+            trackingConfiguration = new TrackingConfiguration { Expire = TimeSpan.FromMinutes(1), ScanTime = TimeSpan.FromMinutes(1) };
             instance = CreateInstance();
         }
 

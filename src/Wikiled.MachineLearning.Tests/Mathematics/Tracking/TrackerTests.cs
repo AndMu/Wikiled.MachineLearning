@@ -104,14 +104,15 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentNullException>(() => new Tracker(logger, null));
-            Assert.Throws<ArgumentNullException>(() => new Tracker(null, mockApplicationConfiguration.Object));
+            Assert.Throws<ArgumentNullException>(() => new Tracker(null, logger, mockApplicationConfiguration.Object));
+            Assert.Throws<ArgumentNullException>(() => new Tracker("Test", logger, null));
+            Assert.Throws<ArgumentNullException>(() => new Tracker("Test", null, mockApplicationConfiguration.Object));
             Assert.AreEqual(0, instance.Count());
         }
 
         private Tracker CreateTracker()
         {
-            return new Tracker(logger, mockApplicationConfiguration.Object);
+            return new Tracker("Test", logger, mockApplicationConfiguration.Object);
         }
     }
 }

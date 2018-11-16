@@ -4,6 +4,6 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
     public interface IRatingStream
     {
-        IObservable<(ITracker, RatingRecord)> Stream { get; }
+        IObservable<(ITracker Tracker, RatingRecord Rating)> Stream { get; }
     }
 }
