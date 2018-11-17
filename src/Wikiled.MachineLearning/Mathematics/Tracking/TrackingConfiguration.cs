@@ -4,10 +4,17 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
     public class TrackingConfiguration
     {
-        public TimeSpan ScanTime { get; set; }
+        public TrackingConfiguration(TimeSpan scanTime, TimeSpan expire, string persistency)
+        {
+            ScanTime = scanTime;
+            Expire = expire;
+            Persistency = persistency ?? throw new ArgumentNullException(nameof(persistency));
+        }
 
-        public TimeSpan Expire { get; set; }
+        public TimeSpan ScanTime { get; }
 
-        public string Persistency { get; set; }
+        public TimeSpan Expire { get; }
+
+        public string Persistency { get; }
     }
 }
