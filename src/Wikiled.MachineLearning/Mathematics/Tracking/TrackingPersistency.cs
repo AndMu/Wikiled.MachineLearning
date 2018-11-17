@@ -13,9 +13,14 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         public TrackingPersistency(TrackingConfiguration configuration, IRatingStream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
             if (string.IsNullOrEmpty(configuration?.Persistency))
             {
-                throw new ArgumentOutOfRangeException(nameof(configuration.Persistency));
+                throw new ArgumentNullException(nameof(configuration.Persistency));
             }
 
             var subscription = stream.Stream.Subscribe(item => Process(item.Item1, item.Item2));
@@ -24,9 +29,9 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             disposable.Add(streamWriter);
             writer = new CsvWriter(streamWriter);
             disposable.Add(writer);
-            writer.WriteField("Id");
             writer.WriteField("Date");
             writer.WriteField("Type");
+            writer.WriteField("Id");
             writer.WriteField("Rating");
             writer.NextRecord();
         }
@@ -35,9 +40,9 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
         {
             lock (writer)
             {
-                writer.WriteField(record.Id);
                 writer.WriteField(record.Date);
                 writer.WriteField(tracker.Name);
+                writer.WriteField(record.Id);
                 writer.WriteField(record.Rating);
                 writer.NextRecord();
                 writer.Flush();

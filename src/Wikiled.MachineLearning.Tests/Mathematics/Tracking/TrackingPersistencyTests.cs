@@ -37,8 +37,14 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             mockRatingStream.Setup(item => item.Stream).Returns(stream);
             instance = CreateTrackingPersistency();
         }
-   
-        [Test]
+
+        [TearDown]
+        public void Teardown()
+        {
+            instance.Dispose();
+        }
+
+       [Test]
         public void Construct()
         {
             Assert.Throws<ArgumentNullException>(() => new TrackingPersistency(null, mockRatingStream.Object));
