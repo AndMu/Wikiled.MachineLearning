@@ -6,6 +6,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
     {
         string Name { get; }
 
+        string Type { get; }
+
         IObservable<RatingRecord> Ratings { get; }
 
         void TrimOlder(TimeSpan maxTrack);

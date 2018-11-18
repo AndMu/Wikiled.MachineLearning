@@ -22,14 +22,17 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         private readonly Subject<RatingRecord> stream = new Subject<RatingRecord>();
 
-        public Tracker(string name, ILogger<Tracker> logger, IApplicationConfiguration config)
+        public Tracker(string name, string type, ILogger<Tracker> logger, IApplicationConfiguration config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+            Type = type ?? throw new ArgumentNullException(nameof(type));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public string Name { get; }
+
+        public string Type { get; }
 
         public IObservable<RatingRecord> Ratings => stream;
 

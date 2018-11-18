@@ -2,6 +2,6 @@
 {
     public interface ITrackerFactory
     {
-        ITracker Construct(string name);
+        ITracker Construct(string name, string type);
     }
 }

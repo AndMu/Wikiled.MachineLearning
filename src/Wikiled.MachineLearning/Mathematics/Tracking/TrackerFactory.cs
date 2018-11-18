@@ -24,9 +24,9 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
-        public ITracker Construct(string name)
+        public ITracker Construct(string name, string type)
         {
-            var tracker = new Tracker(name, logger, config);
+            var tracker = new Tracker(name, type, logger, config);
             foreach (var item in register)
             {
                 item.Register(tracker);
