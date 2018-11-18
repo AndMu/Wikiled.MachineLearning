@@ -10,7 +10,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         private readonly Subject<(ITracker, RatingRecord)> stream = new Subject<(ITracker, RatingRecord)>();
 
-        public IObservable<(ITracker, RatingRecord)> Stream => stream;
+        public IObservable<(ITracker Tracker, RatingRecord Rating)> Stream => stream;
 
         public void Dispose()
         {

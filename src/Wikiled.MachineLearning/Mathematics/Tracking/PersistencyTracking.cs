@@ -2,16 +2,19 @@
 using System.IO;
 using System.Reactive.Disposables;
 using CsvHelper;
+using Microsoft.Extensions.Logging;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
-    public class TrackingPersistency : IDisposable
+    public class PersistencyTracking : IDisposable
     {
         private readonly CompositeDisposable disposable = new CompositeDisposable();
 
         private readonly CsvWriter writer;
 
-        public TrackingPersistency(TrackingConfiguration configuration, IRatingStream stream)
+        private ILogger<PersistencyTracking> logger;
+
+        public PersistencyTracking(ILogger<PersistencyTracking> logger, TrackingConfiguration configuration, IRatingStream stream)
         {
             if (stream == null)
             {
@@ -23,6 +26,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
                 throw new ArgumentNullException(nameof(configuration.Persistency));
             }
 
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            logger.LogInformation("Create persistency {0}", configuration.Persistency);
             var subscription = stream.Stream.Subscribe(item => Process(item.Item1, item.Item2));
             disposable.Add(subscription);
             var streamWriter = new StreamWriter(configuration.Persistency, false);
@@ -30,6 +35,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             writer = new CsvWriter(streamWriter);
             disposable.Add(writer);
             writer.WriteField("Date");
+            writer.WriteField("Tag");
             writer.WriteField("Type");
             writer.WriteField("Id");
             writer.WriteField("Rating");
@@ -42,6 +48,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             {
                 writer.WriteField(record.Date);
                 writer.WriteField(tracker.Name);
+                writer.WriteField(record.Type);
                 writer.WriteField(record.Id);
                 writer.WriteField(record.Rating);
                 writer.NextRecord();

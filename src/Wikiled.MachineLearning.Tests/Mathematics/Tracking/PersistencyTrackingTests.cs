@@ -9,13 +9,13 @@ using Wikiled.MachineLearning.Mathematics.Tracking;
 namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
 {
     [TestFixture]
-    public class TrackingPersistencyTests
+    public class PersistencyTrackingTests
     {
         private TrackingConfiguration mockTrackingConfiguration;
 
         private Mock<IRatingStream> mockRatingStream;
 
-        private TrackingPersistency instance;
+        private PersistencyTracking instance;
 
         private TestScheduler scheduler;
 
@@ -46,8 +46,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
        [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentNullException>(() => new TrackingPersistency(null, mockRatingStream.Object));
-            Assert.Throws<ArgumentNullException>(() => new TrackingPersistency(mockTrackingConfiguration, null));
+            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(null, mockRatingStream.Object));
+            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(mockTrackingConfiguration, null));
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             Assert.IsTrue(File.Exists(mockTrackingConfiguration.Persistency));
         }
 
-        private TrackingPersistency CreateTrackingPersistency()
+        private PersistencyTracking CreateTrackingPersistency()
         {
-            return new TrackingPersistency(mockTrackingConfiguration, mockRatingStream.Object);
+            return new PersistencyTracking(mockTrackingConfiguration, mockRatingStream.Object);
         }
     }
 }
