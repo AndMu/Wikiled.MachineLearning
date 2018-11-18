@@ -13,6 +13,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         public string Keyword { get; set; }
 
+        public string Type { get; set; }
+
         public int Total { get; set; }
 
         public Dictionary<string, TrackingResult> Sentiment { get; }
@@ -20,12 +22,12 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append($"Tracking Result: [{Keyword}]({Total})");
+            builder.Append($"Tracking Result: [{Keyword}/{Type}]({Total})");
             if (Sentiment != null)
             {
                 foreach (var result in Sentiment)
                 {
-                    builder.Append($" [{result.Key}]:{result.Value}");
+                    builder.Append($" [{result.Key}/{Type}]:{result.Value}");
                 }
             }
 
