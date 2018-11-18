@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reactive;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Reactive.Testing;
 using Moq;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             mockRatingStream = new Mock<IRatingStream>();
             var tracker = new Mock<ITracker>();
             var stream = scheduler.CreateHotObservable(
-                new Recorded<Notification<(ITracker Tracker, RatingRecord Rating)>>(100, Notification.CreateOnNext((tracker.Object, new RatingRecord("1", DateTime.Now, 2)))));
+                new Recorded<Notification<(ITracker Tracker, RatingRecord Rating)>>(100, Notification.CreateOnNext((tracker.Object, new RatingRecord("1", "tEST", DateTime.Now, 2)))));
             mockRatingStream.Setup(item => item.Stream).Returns(stream);
             instance = CreateTrackingPersistency();
         }
@@ -46,8 +47,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
        [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(null, mockRatingStream.Object));
-            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(mockTrackingConfiguration, null));
+            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(new NullLogger<PersistencyTracking>(), null, mockRatingStream.Object));
+            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(new NullLogger<PersistencyTracking>(), mockTrackingConfiguration, null));
+            Assert.Throws<ArgumentNullException>(() => new PersistencyTracking(null, mockTrackingConfiguration, mockRatingStream.Object));
         }
 
         [Test]
@@ -60,7 +62,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
 
         private PersistencyTracking CreateTrackingPersistency()
         {
-            return new PersistencyTracking(mockTrackingConfiguration, mockRatingStream.Object);
+            return new PersistencyTracking(new NullLogger<PersistencyTracking>(), mockTrackingConfiguration, mockRatingStream.Object);
         }
     }
 }

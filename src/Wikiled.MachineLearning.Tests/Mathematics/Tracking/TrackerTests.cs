@@ -41,7 +41,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         {
             ITestableObserver<RatingRecord> observer = scheduler.CreateObserver<RatingRecord>();
             instance.Ratings.Subscribe(observer);
-            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", "Test", new DateTime(2016, 01, 10), 10));
             scheduler.AdvanceBy(100);
             instance.Dispose();
             observer.Messages.AssertEqual(
@@ -54,8 +54,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         {
             double? result = instance.CalculateAverageRating();
             Assert.IsNull(result);
-            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
-            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", "Test", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("2", "Test", new DateTime(2016, 01, 10), 10));
 
             mockApplicationConfiguration.Setup(item => item.Now).Returns(new DateTime(2016, 01, 11));
             Assert.AreEqual(0, instance.Count());
@@ -70,9 +70,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         public void AddSameId()
         {
             Assert.IsFalse(instance.IsTracked("1"));
-            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", "Test", new DateTime(2016, 01, 10), 10));
             Assert.IsTrue(instance.IsTracked("1"));
-            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("1", "Test", new DateTime(2016, 01, 10), 10));
             double? result = instance.CalculateAverageRating();
             Assert.AreEqual(1, instance.Count());
             Assert.AreEqual(10, result);
@@ -83,14 +83,14 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         {
             double? result = instance.CalculateAverageRating();
             Assert.IsNull(result);
-            instance.AddRating(new RatingRecord("1", new DateTime(2016, 01, 10), 10));
-            instance.AddRating(new RatingRecord("2", new DateTime(2016, 01, 10), null));
+            instance.AddRating(new RatingRecord("1", "Test", new DateTime(2016, 01, 10), 10));
+            instance.AddRating(new RatingRecord("2", "Test", new DateTime(2016, 01, 10), null));
             result = instance.CalculateAverageRating();
             Assert.AreEqual(1, instance.Count());
             Assert.AreEqual(2, instance.Count(false));
             Assert.AreEqual(10, result);
 
-            instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -10));
+            instance.AddRating(new RatingRecord("3", "Test", new DateTime(2016, 01, 11), -10));
             result = instance.CalculateAverageRating();
             Assert.AreEqual(2, instance.Count());
             Assert.AreEqual(0, result);
