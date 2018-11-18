@@ -27,7 +27,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             {
                 foreach (var result in Sentiment)
                 {
-                    builder.Append($" [{result.Key}/{Type}]:{result.Value}");
+                    builder.Append($" [{result.Key}]:{result.Value}");
                 }
             }
 
