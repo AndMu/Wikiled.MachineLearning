@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
@@ -13,6 +15,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
         {
             this.trackerFactory = trackerFactory ?? throw new ArgumentNullException(nameof(trackerFactory));
         }
+
+        public IEnumerable<ITracker> AllTrackers => trackers.Values.Select(item => item.Value);
 
         public ITracker Resolve(string key, string type)
         {
