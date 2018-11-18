@@ -27,7 +27,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             tracker = new Mock<ITracker>();
             scheduler = new TestScheduler();
             logger = new NullLogger<ExpireTracking>();
-            trackingConfiguration = new TrackingConfiguration { Expire = TimeSpan.FromMinutes(1), ScanTime = TimeSpan.FromMinutes(1) };
+            trackingConfiguration = new TrackingConfiguration(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), "Data.csv");
             instance = CreateInstance();
         }
 

@@ -23,8 +23,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
         public void SetUp()
         {
             scheduler = new TestScheduler();
-            mockTrackingConfiguration = new TrackingConfiguration();
-            mockTrackingConfiguration.Persistency = Path.Combine(TestContext.CurrentContext.TestDirectory, "file.csv");
+            mockTrackingConfiguration = new TrackingConfiguration(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), Path.Combine(TestContext.CurrentContext.TestDirectory, "file.csv"));
             if (File.Exists(mockTrackingConfiguration.Persistency))
             {
                 File.Delete(mockTrackingConfiguration.Persistency);
