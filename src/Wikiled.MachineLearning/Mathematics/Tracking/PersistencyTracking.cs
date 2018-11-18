@@ -12,6 +12,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         private readonly CsvWriter writer;
 
+        private StreamWriter streamWriter;
+
         private ILogger<PersistencyTracking> logger;
 
         public PersistencyTracking(ILogger<PersistencyTracking> logger, TrackingConfiguration configuration, IRatingStream stream)
@@ -30,7 +32,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             logger.LogInformation("Create persistency {0}", configuration.Persistency);
             var subscription = stream.Stream.Subscribe(item => Process(item.Item1, item.Item2));
             disposable.Add(subscription);
-            var streamWriter = new StreamWriter(configuration.Persistency, false);
+            streamWriter = new StreamWriter(configuration.Persistency, false);
             disposable.Add(streamWriter);
             writer = new CsvWriter(streamWriter);
             disposable.Add(writer);
@@ -53,6 +55,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
                 writer.WriteField(record.Rating);
                 writer.NextRecord();
                 writer.Flush();
+                streamWriter.Flush();
             }
         }
 
