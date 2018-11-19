@@ -29,7 +29,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="Wikiled.Arff" Version="2.2.7" />
-    <PackageReference Include="Wikiled.Common" Version="1.1.1" />
+    <PackageReference Include="Wikiled.Common" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>

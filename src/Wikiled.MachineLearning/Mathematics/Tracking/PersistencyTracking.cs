@@ -3,6 +3,7 @@ using System.IO;
 using System.Reactive.Disposables;
 using CsvHelper;
 using Microsoft.Extensions.Logging;
+using Wikiled.Common.Extensions;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
@@ -12,7 +13,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
 
         private readonly CsvWriter writer;
 
-        private StreamWriter streamWriter;
+        private readonly StreamWriter streamWriter;
 
         private ILogger<PersistencyTracking> logger;
 
@@ -29,9 +30,10 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
 
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            logger.LogInformation("Create persistency {0}", configuration.Persistency);
+            logger.LogInformation("Creating persistency {0}", configuration.Persistency);
             var subscription = stream.Stream.Subscribe(item => Process(item.Item1, item.Item2));
             disposable.Add(subscription);
+            configuration.Persistency.Backup();
             streamWriter = new StreamWriter(configuration.Persistency, false);
             disposable.Add(streamWriter);
             writer = new CsvWriter(streamWriter);
