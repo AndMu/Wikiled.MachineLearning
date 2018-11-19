@@ -50,7 +50,7 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             {
                 writer.WriteField(record.Date);
                 writer.WriteField(tracker.Name);
-                writer.WriteField(record.Type);
+                writer.WriteField(tracker.Type);
                 writer.WriteField(record.Id);
                 writer.WriteField(record.Rating);
                 writer.NextRecord();

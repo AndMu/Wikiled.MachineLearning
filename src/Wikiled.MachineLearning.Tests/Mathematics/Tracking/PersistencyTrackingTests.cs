@@ -33,7 +33,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
             mockRatingStream = new Mock<IRatingStream>();
             var tracker = new Mock<ITracker>();
             var stream = scheduler.CreateHotObservable(
-                new Recorded<Notification<(ITracker Tracker, RatingRecord Rating)>>(100, Notification.CreateOnNext((tracker.Object, new RatingRecord("1", "tEST", DateTime.Now, 2)))));
+                new Recorded<Notification<(ITracker Tracker, RatingRecord Rating)>>(100, Notification.CreateOnNext((tracker.Object, new RatingRecord("1", DateTime.Now, 2)))));
             mockRatingStream.Setup(item => item.Stream).Returns(stream);
             instance = CreateTrackingPersistency();
         }
