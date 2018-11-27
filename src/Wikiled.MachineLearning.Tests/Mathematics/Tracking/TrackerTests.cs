@@ -92,6 +92,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Tracking
 
             instance.AddRating(new RatingRecord("3", new DateTime(2016, 01, 11), -10));
             result = instance.CalculateAverageRating();
+            var ratings = instance.GetRatings();
+            Assert.AreEqual(2, ratings.Length);
             Assert.AreEqual(2, instance.Count());
             Assert.AreEqual(0, result);
 

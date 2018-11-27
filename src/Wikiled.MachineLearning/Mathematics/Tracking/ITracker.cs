@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Wikiled.MachineLearning.Mathematics.Tracking
 {
@@ -15,6 +17,8 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
         void AddRating(RatingRecord rating);
 
         bool IsTracked(string id);
+
+        RatingRecord[] GetRatings(int lastHours = 24);
 
         double? CalculateAverageRating(int lastHours = 24);
 

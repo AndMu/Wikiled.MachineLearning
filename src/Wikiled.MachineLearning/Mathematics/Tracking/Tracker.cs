@@ -98,12 +98,25 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             }
         }
 
+        public RatingRecord[] GetRatings(int lastHours = 24)
+        {
+            @lock.EnterReadLock();
+            try
+            {
+                return GetValues(true, lastHours).Where(item => item?.Rating != null).ToArray();
+            }
+            finally
+            {
+                @lock.ExitReadLock();
+            }
+        }
+
         public double? CalculateAverageRating(int lastHours = 24)
         {
             @lock.EnterReadLock();
             try
             {
-                double[] sentiment = GetValues(true, lastHours).Where(item => item != null).Select(item => item.Value).ToArray();
+                double[] sentiment = GetValues(true, lastHours).Where(item => item?.Rating != null).Select(item => item.Rating.Value).ToArray();
                 if (sentiment.Length == 0)
                 {
                     return null;
@@ -137,11 +150,11 @@ namespace Wikiled.MachineLearning.Mathematics.Tracking
             stream?.Dispose();
         }
 
-        private IEnumerable<double?> GetValues(bool withSentiment, int lastHours = 24)
+        private IEnumerable<RatingRecord> GetValues(bool withSentiment, int lastHours = 24)
         {
             DateTime time = config.Now;
             time = time.AddHours(-lastHours);
-            return ratings.Where(item => (!withSentiment || item.Rating.HasValue) && item.Date > time).Select(item => item.Rating);
+            return ratings.Where(item => (!withSentiment || item.Rating.HasValue) && item.Date > time);
         }
     }
 }
