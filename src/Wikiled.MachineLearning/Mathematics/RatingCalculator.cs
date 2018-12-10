@@ -1,12 +1,12 @@
 ﻿using System;
-using NLog;
+using Microsoft.Extensions.Logging;
+using Wikiled.Common.Logging;
 
 namespace Wikiled.MachineLearning.Mathematics
 {
-
     public static class RatingCalculator
     {
-        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger log = ApplicationLogging.CreateLogger("RatingCalculator");
 
         public static int? CalculateStar(double? value)
         {
@@ -64,7 +64,7 @@ namespace Wikiled.MachineLearning.Mathematics
             }
 
             rating = rating / coefficient;
-            log.Debug("Positive: {0} Negative: {1} Rating: {2}", positive, negative, rating);
+            log.LogDebug("Positive: {0} Negative: {1} Rating: {2}", positive, negative, rating);
             return rating;
         }
     }
