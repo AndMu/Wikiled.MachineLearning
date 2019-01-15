@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Wikiled.Arff.Extensions;
-using Wikiled.Arff.Persistence;
-using Wikiled.Arff.Persistence.Headers;
+using Wikiled.Arff.Logic;
+using Wikiled.Arff.Logic.Headers;
 
 namespace Wikiled.MachineLearning.Normalization
 {

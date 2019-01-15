@@ -1,11 +1,10 @@
 using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Wikiled.Arff.Extensions;
-using Wikiled.Arff.Persistence;
+using Wikiled.Arff.Logic;
 using Wikiled.MachineLearning.Normalization;
 
-namespace Wikiled.MachineLearning.Tests.Mathematics.Normalization
+namespace Wikiled.MachineLearning.Tests.Normalization
 {
     [TestFixture]
     public class StandardizerTests
