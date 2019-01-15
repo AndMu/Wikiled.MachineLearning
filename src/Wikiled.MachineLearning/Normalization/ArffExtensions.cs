@@ -39,9 +39,9 @@ namespace Wikiled.MachineLearning.Normalization
             {
                 getValue = item =>
                 {
-                    if (item.Value is int)
+                    if (item.Value is int value)
                     {
-                        return (double)(int)item.Value;
+                        return (double)value;
                     }
 
                     return (double)item.Value;
