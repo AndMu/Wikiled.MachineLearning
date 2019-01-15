@@ -133,9 +133,15 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
         private void Init(VectorCell[] data, int length, NormalizationType normalizationType)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
             dataTableValues = null;
             cells = null;
-            OriginalCells = data ?? throw new ArgumentNullException(nameof(data));
+            data = data.OrderBy(item => item.Index).ToArray();
+            OriginalCells = data;
             Length = length;
             if (data.Length > Length ||
                 (data.Length > 0 && data.Max(item => item.Index) >= Length))
