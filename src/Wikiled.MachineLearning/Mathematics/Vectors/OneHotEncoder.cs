@@ -4,7 +4,7 @@ using Wikiled.MachineLearning.Normalization;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
-    public class OneHotEncoder : IOneHotEncoder
+    public class OneHotEncoder : IWordVectorEncoder
     {
         private readonly Dictionary<string, int> table = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
