@@ -63,6 +63,21 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             Assert.AreEqual(4, data.Length);
         }
 
+        [Test]
+        public void SameCellTwice()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => new VectorData(
+                    new[]
+                    {
+                        new VectorCell(0, new SimpleCell("1", 1), 1),
+                        new VectorCell(0, new SimpleCell("1", 1), 1)
+                    },
+                    4,
+                    0,
+                    NormalizationType.None));
+        }
+
         [TestCase(NormalizationType.None, 2)]
         [TestCase(NormalizationType.L2, 1.41)]
         public void ValidateTheta(NormalizationType normalization, double value)

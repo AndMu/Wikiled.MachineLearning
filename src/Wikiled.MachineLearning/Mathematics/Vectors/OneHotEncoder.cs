@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wikiled.MachineLearning.Normalization;
+using System.Linq;
 
 namespace Wikiled.MachineLearning.Mathematics.Vectors
 {
@@ -39,7 +39,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             }
 
             var cells = new List<VectorCell>();
-            foreach (var word in words)
+            foreach (var word in words.Distinct())
             {
                 if (table.ContainsKey(word))
                 {
@@ -47,7 +47,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
                 }
             }
 
-            return new VectorData(cells.ToArray(), table.Count, NormalizationType.None);
+            return new VectorData(cells.ToArray(), table.Count);
         }
     }
 }

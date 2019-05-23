@@ -71,7 +71,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
         public VectorCell[] OriginalCells { get; private set; }
 
         public double RHO { get; }
-     
+
         public VectorCell this[int index]
         {
             get
@@ -140,13 +140,23 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
 
             dataTableValues = null;
             cells = null;
+
             data = data.OrderBy(item => item.Index).ToArray();
+            Array.Sort(data, Comparer<VectorCell>.Create((x, y) => x.Index < y.Index ? 1 : 0));
             OriginalCells = data;
             Length = length;
             if (data.Length > Length ||
-                (data.Length > 0 && data.Max(item => item.Index) >= Length))
+                (data.Length > 0 && data[data.Length - 1].Index >= Length))
             {
                 throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            for (int i = 1; i < data.Length; i++)
+            {
+                if (data[i - 1].Index == data[i].Index)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(data), "Duplicate index detected");
+                }
             }
 
             normalization = new Lazy<INormalize>(() => data.Select(item => item.X).Normalize(normalizationType));
