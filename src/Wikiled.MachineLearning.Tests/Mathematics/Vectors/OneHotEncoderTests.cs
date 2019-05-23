@@ -21,6 +21,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             var vector = instance.GetFullVector("Two", "ONe", "Unknown");
             Assert.AreEqual(3, vector.Length);
             Assert.AreEqual(new double[] { 0, 1, 1 }, vector.FullValues);
+
+            vector = instance.GetFullVector("one", "one", "one");
+            Assert.AreEqual(new double[] { 0, 1, 1 }, vector.FullValues);
         }
     }
 }
