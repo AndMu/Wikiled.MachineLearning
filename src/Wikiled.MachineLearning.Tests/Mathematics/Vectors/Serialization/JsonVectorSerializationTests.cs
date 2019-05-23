@@ -21,10 +21,10 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors.Serialization
             }
 
             var serialization = new JsonVectorSerialization(file, useName);
-            DictionaryVectorHelper helper = new DictionaryVectorHelper();
-            helper.AddToDictionary("One");
-            helper.AddToDictionary("Two");
-            helper.AddToDictionary("Three");
+            var helper = new OneHotEncoder();
+            helper.AddWord("One");
+            helper.AddWord("Two");
+            helper.AddWord("Three");
             var vector1 = helper.GetFullVector("One", "Two");
             var vector2 = helper.GetFullVector("One", "Three");
             serialization.Serialize(new[] { vector1, vector2 });

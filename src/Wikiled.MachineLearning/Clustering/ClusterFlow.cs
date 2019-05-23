@@ -7,7 +7,7 @@ namespace Wikiled.MachineLearning.Clustering
     {
         public static ClusterRegion[] GetRegions(double[] data, int minClusterSize)
         {
-            List<ClusterRegion> regions = new List<ClusterRegion>();
+            var regions = new List<ClusterRegion>();
             ClusterRegion currentRegion = null;
 
             for (int i = 0; i < data.Length; i++)

@@ -15,7 +15,7 @@ namespace Wikiled.MachineLearning.Mathematics.Vectors
             double dot = 0.0d;
             double mag1 = 0.0d;
             double mag2 = 0.0d;
-            HashSet<int> calculated = new HashSet<int>();
+            var calculated = new HashSet<int>();
             foreach (var vectorCell in vector1.DataTable)
             {
                 var x1 = vectorCell.Value.X;
