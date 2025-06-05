@@ -1,6 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Arff.Logic;
 using Wikiled.MachineLearning.Normalization;
 
@@ -38,17 +39,17 @@ namespace Wikiled.MachineLearning.Tests.Normalization
             data[3] = new double[] { 2, 1, 1 };
             var standardizer = Standardizer.GetNumericStandardizer(data, withY);
             var result = standardizer.StandardizeAll(data);
-            Assert.AreEqual(4, result.Length);
-            Assert.AreEqual(3, result[0].Length);
-            Assert.AreEqual(-1, Math.Round(result[0][0], 2));
-            Assert.AreEqual(1, Math.Round(result[0][1], 2));
+            ClassicAssert.AreEqual(4, result.Length);
+            ClassicAssert.AreEqual(3, result[0].Length);
+            ClassicAssert.AreEqual(-1, Math.Round(result[0][0], 2));
+            ClassicAssert.AreEqual(1, Math.Round(result[0][1], 2));
             if (withY)
             {
-                Assert.AreEqual(2, Math.Round(result[0][2], 2));
+                ClassicAssert.AreEqual(2, Math.Round(result[0][2], 2));
             }
             else
             {
-                Assert.AreEqual(1, Math.Round(result[0][2], 2));
+                ClassicAssert.AreEqual(1, Math.Round(result[0][2], 2));
             }
         }
 
@@ -78,24 +79,24 @@ namespace Wikiled.MachineLearning.Tests.Normalization
 
             var data = dataset.GetRawData();
             var result = Standardizer.GetNumericStandardizer(data).StandardizeAll(data);
-            Assert.AreEqual(3, result[0].Length);
-            Assert.AreEqual(-1, Math.Round(result[0][0], 2));
-            Assert.AreEqual(1, Math.Round(result[0][1], 2));
+            ClassicAssert.AreEqual(3, result[0].Length);
+            ClassicAssert.AreEqual(-1, Math.Round(result[0][0], 2));
+            ClassicAssert.AreEqual(1, Math.Round(result[0][1], 2));
         }
 
         private static void CheckData(double[][] result)
         {
-            Assert.AreEqual(4, result.Length);
-            Assert.AreEqual(9, result[0].Length);
-            Assert.AreEqual(-1.23, Math.Round(result[0][0], 2));
-            Assert.AreEqual(-1, Math.Round(result[0][1], 2));
-            Assert.AreEqual(-1.34, Math.Round(result[0][2], 2));
-            Assert.AreEqual(0, result[0][3]);
-            Assert.AreEqual(1, result[0][4]);
-            Assert.AreEqual(0, result[0][5]);
-            Assert.AreEqual(0, result[0][6]);
-            Assert.AreEqual(0, result[0][7]);
-            Assert.AreEqual(1, result[0][8]);
+            ClassicAssert.AreEqual(4, result.Length);
+            ClassicAssert.AreEqual(9, result[0].Length);
+            ClassicAssert.AreEqual(-1.23, Math.Round(result[0][0], 2));
+            ClassicAssert.AreEqual(-1, Math.Round(result[0][1], 2));
+            ClassicAssert.AreEqual(-1.34, Math.Round(result[0][2], 2));
+            ClassicAssert.AreEqual(0, result[0][3]);
+            ClassicAssert.AreEqual(1, result[0][4]);
+            ClassicAssert.AreEqual(0, result[0][5]);
+            ClassicAssert.AreEqual(0, result[0][6]);
+            ClassicAssert.AreEqual(0, result[0][7]);
+            ClassicAssert.AreEqual(1, result[0][8]);
         }
     }
 }

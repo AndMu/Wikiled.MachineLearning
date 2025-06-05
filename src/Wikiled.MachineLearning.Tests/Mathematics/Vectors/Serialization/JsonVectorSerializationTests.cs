@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 using Wikiled.MachineLearning.Mathematics.Vectors.Serialization;
 
@@ -29,23 +30,23 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors.Serialization
             var vector2 = helper.GetFullVector("One", "Three");
             serialization.Serialize(new[] { vector1, vector2 });
             var result = serialization.Deserialize().ToArray();
-            Assert.AreEqual(2, result.Length);
+            ClassicAssert.AreEqual(2, result.Length);
 
-            Assert.AreEqual(1, result[0].Cells[0].X);
-            Assert.AreEqual(0, result[0].Cells[0].Index);
-            Assert.AreEqual(1, result[0].Cells[1].X);
-            Assert.AreEqual(1, result[0].Cells[1].Index);
+            ClassicAssert.AreEqual(1, result[0].Cells[0].X);
+            ClassicAssert.AreEqual(0, result[0].Cells[0].Index);
+            ClassicAssert.AreEqual(1, result[0].Cells[1].X);
+            ClassicAssert.AreEqual(1, result[0].Cells[1].Index);
 
-            Assert.AreEqual(1, result[1].Cells[0].X);
-            Assert.AreEqual(0, result[1].Cells[0].Index);
-            Assert.AreEqual(1, result[1].Cells[1].X);
-            Assert.AreEqual(2, result[1].Cells[1].Index);
+            ClassicAssert.AreEqual(1, result[1].Cells[0].X);
+            ClassicAssert.AreEqual(0, result[1].Cells[0].Index);
+            ClassicAssert.AreEqual(1, result[1].Cells[1].X);
+            ClassicAssert.AreEqual(2, result[1].Cells[1].Index);
         }
 
         [Test]
         public void Construct()
         {
-            Assert.Throws<ArgumentNullException>(() => new JsonVectorSerialization(null));
+            ClassicAssert.Throws<ArgumentNullException>(() => new JsonVectorSerialization(null));
         }
     }
 }

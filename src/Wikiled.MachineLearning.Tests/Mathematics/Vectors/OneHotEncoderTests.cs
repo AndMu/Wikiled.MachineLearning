@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
@@ -18,20 +19,20 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         public void Complex()
         {
             instance.AddWords("Test", "Two", "one");
-            Assert.AreEqual(3, instance.Total);
+            ClassicAssert.AreEqual(3, instance.Total);
             var vector = instance.GetFullVector("Two", "ONe", "Unknown");
-            Assert.AreEqual(3, vector.Length);
-            Assert.AreEqual(new double[] { 0, 1, 1 }, vector.FullValues);
+            ClassicAssert.AreEqual(3, vector.Length);
+            ClassicAssert.AreEqual(new double[] { 0, 1, 1 }, vector.FullValues);
 
             vector = instance.GetFullVector("one", "one", "one");
-            Assert.AreEqual(new double[] { 0, 0, 1 }, vector.FullValues);
+            ClassicAssert.AreEqual(new double[] { 0, 0, 1 }, vector.FullValues);
         }
 
         [Test]
         public void Arguments()
         {
-            Assert.Throws<ArgumentException>(() => instance.AddWord(null));
-            Assert.Throws<ArgumentNullException>(() => instance.GetFullVector(null));
+            ClassicAssert.Throws<ArgumentException>(() => instance.AddWord(null));
+            ClassicAssert.Throws<ArgumentNullException>(() => instance.GetFullVector(null));
         }
 
         [Test]
@@ -41,8 +42,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             instance.AddWord("Two");
             instance.AddWord("Three");
             var vector = instance.GetFullVector("One", "three");
-            Assert.AreEqual(3, vector.Length);
-            Assert.AreEqual(2, vector.Cells.Length);
+            ClassicAssert.AreEqual(3, vector.Length);
+            ClassicAssert.AreEqual(2, vector.Cells.Length);
         }
 
     }

@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using System.Linq;
+using NUnit.Framework.Legacy;
 using Wikiled.Arff.Logic;
 using Wikiled.MachineLearning.Normalization;
 
@@ -36,10 +37,10 @@ namespace Wikiled.MachineLearning.Tests.Normalization
             document.AddRecord("Three").Value = 1;
 
             var result = dataset.GetDataNormalized(NormalizationType.L2).ToArray();
-            Assert.AreEqual(4, result.Length);
-            Assert.AreEqual(0.82, Math.Round(result[0].X[0], 2));
-            Assert.AreEqual(0.41, Math.Round(result[0].X[1], 2));
-            Assert.AreEqual(0.41, Math.Round(result[0].X[2], 2));
+            ClassicAssert.AreEqual(4, result.Length);
+            ClassicAssert.AreEqual(0.82, Math.Round(result[0].X[0], 2));
+            ClassicAssert.AreEqual(0.41, Math.Round(result[0].X[1], 2));
+            ClassicAssert.AreEqual(0.41, Math.Round(result[0].X[2], 2));
         }
     }
 }

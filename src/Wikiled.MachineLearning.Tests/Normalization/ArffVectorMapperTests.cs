@@ -1,5 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.Arff.Logic;
 using Wikiled.MachineLearning.Normalization;
 
@@ -34,10 +35,10 @@ namespace Wikiled.MachineLearning.Tests.Normalization
 
             var mapper = new ArffVectorMapper(dataset);
             var vectors = mapper.GetVectors().ToArray();
-            Assert.AreEqual(4, vectors.Length);
-            Assert.AreEqual(2, vectors[0].Cells[0].Calculated);
-            Assert.AreEqual(1, vectors[0].Cells[1].Calculated);
-            Assert.AreEqual(1, vectors[0].Cells[2].Calculated);
+            ClassicAssert.AreEqual(4, vectors.Length);
+            ClassicAssert.AreEqual(2, vectors[0].Cells[0].Calculated);
+            ClassicAssert.AreEqual(1, vectors[0].Cells[1].Calculated);
+            ClassicAssert.AreEqual(1, vectors[0].Cells[2].Calculated);
         }
     }
 }

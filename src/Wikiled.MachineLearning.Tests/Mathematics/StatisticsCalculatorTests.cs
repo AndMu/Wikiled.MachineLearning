@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics
@@ -18,8 +19,8 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         [Test]
         public void TestEmpty()
         {
-            Assert.AreEqual(Double.NaN, Math.Round(calculator.CalculateRmse(), 2));
-            Assert.AreEqual(
+            ClassicAssert.AreEqual(Double.NaN, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(
                 "Total: 0 RMSE: NaN Accuracy: NaN% Accuracy (without missing): NaN% Missing NaN%",
                 StatisticsCalculator.AggregateOuput(new[] {calculator}));
 
@@ -29,35 +30,35 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         public void First()
         {
             Add(1, 195, 77, 46, 16, 30);
-            Assert.AreEqual(1.56, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.56, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
         public void Second()
         {
             Add(2, 90, 124, 80, 44, 29);
-            Assert.AreEqual(1.29, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.29, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
         public void Third()
         {
             Add(3, 47, 90, 118, 73, 38);
-            Assert.AreEqual(1.17, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.17, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
         public void Four()
         {
             Add(4, 29, 40, 72, 162, 63);
-            Assert.AreEqual(1.23, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.23, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
         public void Five()
         {
             Add(5, 48, 26, 48, 82, 164);
-            Assert.AreEqual(1.86, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.86, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
@@ -68,7 +69,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Add(3, 47, 90, 118, 73, 38);
             Add(4, 29, 40, 72, 162, 63);
             Add(5, 48, 26, 48, 82, 164);
-            Assert.AreEqual(1.45, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.45, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Add(3, 0, 16, 2071, 311, 0);
             Add(4, 0, 2, 505, 1245, 0);
             Add(5, 0, 0, 22, 219, 5);
-            Assert.AreEqual(0.6, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(0.6, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Add(3, 0, 0, 306, 60, 0);
             Add(4, 0, 0, 248, 118, 0);
             Add(5, 0, 1, 258, 109, 5);
-            Assert.AreEqual(1.4, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.4, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             Add(3, 95, 448, 1272, 128, 455);
             Add(4, 41, 201, 869, 143, 498);
             Add(5, 3, 31, 112, 15, 85);
-            Assert.AreEqual(1.24, Math.Round(calculator.CalculateRmse(), 2));
+            ClassicAssert.AreEqual(1.24, Math.Round(calculator.CalculateRmse(), 2));
         }
 
         private void Add(int expected, params int[] data)

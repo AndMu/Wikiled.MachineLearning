@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Normalization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
@@ -25,9 +26,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, -2, 0, 4));
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 2, 3, 2));
             VectorData sumVector = vectors.ToArray().Average();
-            Assert.AreEqual(1, sumVector[0].X);
-            Assert.AreEqual(2, sumVector[1].X);
-            Assert.AreEqual(3, sumVector[2].X);
+            ClassicAssert.AreEqual(1, sumVector[0].X);
+            ClassicAssert.AreEqual(2, sumVector[1].X);
+            ClassicAssert.AreEqual(3, sumVector[2].X);
         }
 
         [Test]
@@ -37,9 +38,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 1, 2, 3));
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, -2, 0, 4));
             VectorData sumVector = vectors.Sum(NormalizationType.None);
-            Assert.AreEqual(-1, sumVector[0].X);
-            Assert.AreEqual(2, sumVector[1].X);
-            Assert.AreEqual(7, sumVector[2].X);
+            ClassicAssert.AreEqual(-1, sumVector[0].X);
+            ClassicAssert.AreEqual(2, sumVector[1].X);
+            ClassicAssert.AreEqual(7, sumVector[2].X);
         }
 
         [Test]
@@ -49,9 +50,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 1, 2, 3));
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, -2, 0, 4));
             VectorData sumVector = vectors.Sum(NormalizationType.L2);
-            Assert.AreEqual(-0.14, Math.Round(sumVector[0].X, 2));
-            Assert.AreEqual(0.27, Math.Round(sumVector[1].X, 2));
-            Assert.AreEqual(0.95, Math.Round(sumVector[2].X, 2));
+            ClassicAssert.AreEqual(-0.14, Math.Round(sumVector[0].X, 2));
+            ClassicAssert.AreEqual(0.27, Math.Round(sumVector[1].X, 2));
+            ClassicAssert.AreEqual(0.95, Math.Round(sumVector[2].X, 2));
         }
 
         [Test]
@@ -61,7 +62,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 1, 3, -5));
             vectors.Add(vectorDataFactory.CreateSimple(NormalizationType.None, 4, -2, -1));
             var product = vectors.DotProduct();
-            Assert.AreEqual(3, product);
+            ClassicAssert.AreEqual(3, product);
         }
 
         [Test]
@@ -86,7 +87,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 5,
                 NormalizationType.None);
             var product = VectorMathematics.DotProduct(vector1, vector2);
-            Assert.AreEqual(3, product);
+            ClassicAssert.AreEqual(3, product);
         }
     }
 }

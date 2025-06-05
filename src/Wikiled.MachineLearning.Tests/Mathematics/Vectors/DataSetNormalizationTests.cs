@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Normalization;
 using Wikiled.Common.Serialization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
@@ -28,17 +29,17 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
         public void MeanNormalize()
         {
             DataSetNormalization.MeanNormalize(vectors.ToArray());
-            Assert.AreEqual(-0.5, vectors[0][0].X);
-            Assert.AreEqual(0, vectors[0][1].X);
-            Assert.AreEqual(0.5, Math.Round(vectors[0][2].X, 2));
+            ClassicAssert.AreEqual(-0.5, vectors[0][0].X);
+            ClassicAssert.AreEqual(0, vectors[0][1].X);
+            ClassicAssert.AreEqual(0.5, Math.Round(vectors[0][2].X, 2));
 
-            Assert.AreEqual(0, vectors[1][0].X);
-            Assert.AreEqual(0.5, vectors[1][1].X);
-            Assert.AreEqual(-0.5, Math.Round(vectors[1][2].X, 2));
+            ClassicAssert.AreEqual(0, vectors[1][0].X);
+            ClassicAssert.AreEqual(0.5, vectors[1][1].X);
+            ClassicAssert.AreEqual(-0.5, Math.Round(vectors[1][2].X, 2));
 
-            Assert.AreEqual(0.5, vectors[2][0].X);
-            Assert.AreEqual(-0.5, vectors[2][1].X);
-            Assert.AreEqual(0, Math.Round(vectors[2][2].X, 2));
+            ClassicAssert.AreEqual(0.5, vectors[2][0].X);
+            ClassicAssert.AreEqual(-0.5, vectors[2][1].X);
+            ClassicAssert.AreEqual(0, Math.Round(vectors[2][2].X, 2));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 using Wikiled.MachineLearning.Normalization;
 
@@ -25,7 +26,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             VectorData vector1 = vectorDataFactory.CreateSimple(NormalizationType.None, 1, 1, 1);
             VectorData vector2 = vectorDataFactory.CreateSimple(NormalizationType.None, 2, 2, 2);
             double similarity = instance.Measure(vector1, vector2);
-            Assert.AreEqual(1, Math.Round(similarity, 4));
+            ClassicAssert.AreEqual(1, Math.Round(similarity, 4));
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             VectorData vector1 = vectorDataFactory.CreateSimple(NormalizationType.L2, 1, 1, 1);
             VectorData vector2 = vectorDataFactory.CreateSimple(NormalizationType.L2, 2, 2, 2);
             double similarity = instance.Measure(vector1, vector2);
-            Assert.AreEqual(1, Math.Round(similarity, 4));
+            ClassicAssert.AreEqual(1, Math.Round(similarity, 4));
         }
 
         [Test]
@@ -43,7 +44,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
             VectorData vector1 = vectorDataFactory.CreateSimple(NormalizationType.None, 1, 1, 1);
             VectorData vector2 = vectorDataFactory.CreateSimple(NormalizationType.None, -1, -1, -1);
             double similarity = instance.Measure(vector1, vector2);
-            Assert.AreEqual(-1, Math.Round(similarity, 4));
+            ClassicAssert.AreEqual(-1, Math.Round(similarity, 4));
         }
     }
 }

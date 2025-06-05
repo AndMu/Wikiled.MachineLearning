@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Normalization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
@@ -25,14 +26,14 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("1", 1000),
                 new SimpleCell("2", 2),
                 new SimpleCell("3", 0.3));
-            Assert.AreEqual(1000, vector[0].X);
-            Assert.AreEqual(2, vector[1].X);
+            ClassicAssert.AreEqual(1000, vector[0].X);
+            ClassicAssert.AreEqual(2, vector[1].X);
             vector.ChangeNormalization(NormalizationType.L2);
-            Assert.AreEqual(0.999998, Math.Round(vector[0].X, 6));
-            Assert.AreEqual(0.002, Math.Round(vector[1].X, 6));
+            ClassicAssert.AreEqual(0.999998, Math.Round(vector[0].X, 6));
+            ClassicAssert.AreEqual(0.002, Math.Round(vector[1].X, 6));
             vector.ChangeNormalization(NormalizationType.None);
-            Assert.AreEqual(1000, vector[0].X);
-            Assert.AreEqual(2, vector[1].X);
+            ClassicAssert.AreEqual(1000, vector[0].X);
+            ClassicAssert.AreEqual(2, vector[1].X);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("2", 2),
                 new SimpleCell("3", 0.3));
             var data = vector.ToArray();
-            Assert.AreEqual(3, data.Length);
+            ClassicAssert.AreEqual(3, data.Length);
         }
 
         [Test]
@@ -60,13 +61,13 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 0,
                 NormalizationType.None);
             var data = vector.ToArray();
-            Assert.AreEqual(4, data.Length);
+            ClassicAssert.AreEqual(4, data.Length);
         }
 
         [Test]
         public void SameCellTwice()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(
                 () => new VectorData(
                     new[]
                     {
@@ -92,13 +93,13 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 0,
                 normalization);
             var data = vector.ToArray();
-            Assert.AreEqual(value, Math.Round(data[0].Calculated, 2));
+            ClassicAssert.AreEqual(value, Math.Round(data[0].Calculated, 2));
         }
 
         [Test]
         public void IncorrectLength()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(
                 () => new VectorData(
                     new[]
                         {
@@ -119,9 +120,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("2", 2),
                 new SimpleCell("3", 0.3));
             vector.NormalizeByCoef(10);
-            Assert.AreEqual(100, vector[0].X);
-            Assert.AreEqual(0.2, vector[1].X);
-            Assert.AreEqual(0.03, Math.Round(vector[2].X, 2));
+            ClassicAssert.AreEqual(100, vector[0].X);
+            ClassicAssert.AreEqual(0.2, vector[1].X);
+            ClassicAssert.AreEqual(0.03, Math.Round(vector[2].X, 2));
         }
     }
 }

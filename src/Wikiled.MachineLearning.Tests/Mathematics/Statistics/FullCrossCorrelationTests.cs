@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Statistics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
@@ -15,10 +16,10 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
         {
             FullCrossCorrelation correlation = new FullCrossCorrelation(false, signal1, signal2);
             correlation.Calculate();
-            Assert.AreEqual(-1, correlation.Offset);
-            Assert.AreEqual(81, correlation.Result.Result);
-            Assert.AreEqual(0.5424, Math.Round(correlation.Result.Normalized, 4));
-            Assert.AreEqual(39, correlation.Auto);
+            ClassicAssert.AreEqual(-1, correlation.Offset);
+            ClassicAssert.AreEqual(81, correlation.Result.Result);
+            ClassicAssert.AreEqual(0.5424, Math.Round(correlation.Result.Normalized, 4));
+            ClassicAssert.AreEqual(39, correlation.Auto);
         }
     }
 }
