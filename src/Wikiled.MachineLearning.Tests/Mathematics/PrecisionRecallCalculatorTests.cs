@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics
@@ -18,9 +19,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         [Test]
         public void Construct()
         {
-            Assert.AreEqual(0, instance.Total);
-            Assert.AreEqual(0, instance.F1(true));
-            Assert.AreEqual(0, instance.GetPrecision(true));
+            ClassicAssert.AreEqual(0, instance.Total);
+            ClassicAssert.AreEqual(0, instance.F1(true));
+            ClassicAssert.AreEqual(0, instance.GetPrecision(true));
         }
 
         [Test]
@@ -31,10 +32,10 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             instance.Add(false, true);
             instance.Add(false, true);
             instance.Add(false, false);
-            Assert.AreEqual(0.33, Math.Round(instance.GetSingleAccuracy(false), 2));
-            Assert.AreEqual(0.4, Math.Round(instance.F1(true), 2));
-            Assert.AreEqual(0.5, Math.Round(instance.GetSingleAccuracy(true), 2));
-            Assert.AreEqual("Total:<5> Positive:<50.000%> Negative:<33.333%> F1:<0.400>", instance.GetTotalAccuracy());
+            ClassicAssert.AreEqual(0.33, Math.Round(instance.GetSingleAccuracy(false), 2));
+            ClassicAssert.AreEqual(0.4, Math.Round(instance.F1(true), 2));
+            ClassicAssert.AreEqual(0.5, Math.Round(instance.GetSingleAccuracy(true), 2));
+            ClassicAssert.AreEqual("Total:<5> Positive:<50.000%> Negative:<33.333%> F1:<0.400>", instance.GetTotalAccuracy());
         }
 
         [Test]
@@ -50,71 +51,71 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
                 instance.Add(true, null);
             }
 
-            Assert.AreEqual(1, instance.GetPrecision(true));
-            Assert.AreEqual(0.3, instance.GetRecall(true));
-            Assert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
+            ClassicAssert.AreEqual(1, instance.GetPrecision(true));
+            ClassicAssert.AreEqual(0.3, instance.GetRecall(true));
+            ClassicAssert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
         public void SimpleNLP()
         {
             var result = PrecisionRecallExtension.Generate(90, 210, 140, 9560);
-            Assert.AreEqual(0.3913, Math.Round(result.GetPrecision(true)), 4);
-            Assert.AreEqual(0.3, result.GetRecall(true));
-            Assert.AreEqual(0.965, result.GetAccuracy(true));
+            ClassicAssert.AreEqual(0.3913, Math.Round(result.GetPrecision(true)), 4);
+            ClassicAssert.AreEqual(0.3, result.GetRecall(true));
+            ClassicAssert.AreEqual(0.965, result.GetAccuracy(true));
         }
 
         [Test]
         public void SimpleNLP2()
         {
             var result = PrecisionRecallExtension.Generate(15, 4, 18, 6);
-            Assert.AreEqual(0.455, Math.Round(result.GetPrecision(true), 3));
-            Assert.AreEqual(0.789, Math.Round(result.GetRecall(true), 3));
-            Assert.AreEqual(0.488, Math.Round(result.GetAccuracy(true), 3));
-            Assert.AreEqual(0.577, Math.Round(result.F1(true), 3));
+            ClassicAssert.AreEqual(0.455, Math.Round(result.GetPrecision(true), 3));
+            ClassicAssert.AreEqual(0.789, Math.Round(result.GetRecall(true), 3));
+            ClassicAssert.AreEqual(0.488, Math.Round(result.GetAccuracy(true), 3));
+            ClassicAssert.AreEqual(0.577, Math.Round(result.F1(true), 3));
         }
 
         [Test]
         public void SimpleNLP3()
         {
             var result = PrecisionRecallExtension.Generate(30, 10, 10, 50);
-            Assert.AreEqual(0.75, Math.Round(result.GetPrecision(true), 3));
-            Assert.AreEqual(0.75, Math.Round(result.GetRecall(true), 3));
-            Assert.AreEqual(0.80, Math.Round(result.GetAccuracy(true), 3));
-            Assert.AreEqual(0.75, Math.Round(result.F1(true), 3));
+            ClassicAssert.AreEqual(0.75, Math.Round(result.GetPrecision(true), 3));
+            ClassicAssert.AreEqual(0.75, Math.Round(result.GetRecall(true), 3));
+            ClassicAssert.AreEqual(0.80, Math.Round(result.GetAccuracy(true), 3));
+            ClassicAssert.AreEqual(0.75, Math.Round(result.F1(true), 3));
         }
 
         [Test]
         public void Zeros()
         {
             var result = PrecisionRecallExtension.Generate(0, 0, 0, 0);
-            Assert.AreEqual(0, result.GetPrecision(true));
-            Assert.AreEqual(0, result.GetRecall(true), 3);
-            Assert.AreEqual(0, result.GetAccuracy(true), 3);
-            Assert.AreEqual(0, result.F1(true), 3);
+            ClassicAssert.AreEqual(0, result.GetPrecision(true));
+            ClassicAssert.AreEqual(0, result.GetRecall(true), 3);
+            ClassicAssert.AreEqual(0, result.GetAccuracy(true), 3);
+            ClassicAssert.AreEqual(0, result.F1(true), 3);
 
             result = PrecisionRecallExtension.Generate(1, 0, 0, 0);
-            Assert.AreEqual(0, result.GetRecall(true), 3);
-            Assert.AreEqual(0, result.GetAccuracy(true), 3);
-            Assert.AreEqual(0, result.F1(true), 3);
+            ClassicAssert.AreEqual(0, result.GetRecall(true), 3);
+            ClassicAssert.AreEqual(0, result.GetAccuracy(true), 3);
+            ClassicAssert.AreEqual(0, result.F1(true), 3);
 
             result = PrecisionRecallExtension.Generate(0, 1, 0, 0);
-            Assert.AreEqual(0, result.GetPrecision(true));
-            Assert.AreEqual(0, result.GetRecall(true), 3);
-            Assert.AreEqual(0, result.GetAccuracy(true), 3);
-            Assert.AreEqual(0, result.F1(true), 3);
+            ClassicAssert.AreEqual(0, result.GetPrecision(true));
+            ClassicAssert.AreEqual(0, result.GetRecall(true), 3);
+            ClassicAssert.AreEqual(0, result.GetAccuracy(true), 3);
+            ClassicAssert.AreEqual(0, result.F1(true), 3);
 
             result = PrecisionRecallExtension.Generate(0, 0, 1, 0);
-            Assert.AreEqual(0, result.GetPrecision(true));
-            Assert.AreEqual(0, result.GetRecall(true), 3);
-            Assert.AreEqual(0, result.GetAccuracy(true), 3);
-            Assert.AreEqual(0, result.F1(true), 3);
+            ClassicAssert.AreEqual(0, result.GetPrecision(true));
+            ClassicAssert.AreEqual(0, result.GetRecall(true), 3);
+            ClassicAssert.AreEqual(0, result.GetAccuracy(true), 3);
+            ClassicAssert.AreEqual(0, result.F1(true), 3);
 
             result = PrecisionRecallExtension.Generate(0, 0, 0, 1);
-            Assert.AreEqual(0, result.GetPrecision(true));
-            Assert.AreEqual(0, result.GetRecall(true), 3);
-            Assert.AreEqual(0, result.GetAccuracy(true), 3);
-            Assert.AreEqual(0, result.F1(true), 3);
+            ClassicAssert.AreEqual(0, result.GetPrecision(true));
+            ClassicAssert.AreEqual(0, result.GetRecall(true), 3);
+            ClassicAssert.AreEqual(0, result.GetAccuracy(true), 3);
+            ClassicAssert.AreEqual(0, result.F1(true), 3);
         }
 
         [Test]
@@ -130,9 +131,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
                 instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.3, instance.GetPrecision(true));
-            Assert.AreEqual(1, instance.GetRecall(true));
-            Assert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
+            ClassicAssert.AreEqual(0.3, instance.GetPrecision(true));
+            ClassicAssert.AreEqual(1, instance.GetRecall(true));
+            ClassicAssert.AreEqual(0.46, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
@@ -153,9 +154,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
                 instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.43, Math.Round(instance.GetPrecision(true), 2));
-            Assert.AreEqual(1, instance.GetRecall(true));
-            Assert.AreEqual(0.6, Math.Round(instance.F1(true), 2));
+            ClassicAssert.AreEqual(0.43, Math.Round(instance.GetPrecision(true), 2));
+            ClassicAssert.AreEqual(1, instance.GetRecall(true));
+            ClassicAssert.AreEqual(0.6, Math.Round(instance.F1(true), 2));
         }
 
         [Test]
@@ -181,9 +182,9 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
                 instance.Add(false, true);
             }
 
-            Assert.AreEqual(0.4, instance.GetPrecision(true));
-            Assert.AreEqual(0.67, Math.Round(instance.GetRecall(true), 2));
-            Assert.AreEqual(0.5, Math.Round(instance.F1(true), 2));
+            ClassicAssert.AreEqual(0.4, instance.GetPrecision(true));
+            ClassicAssert.AreEqual(0.67, Math.Round(instance.GetRecall(true), 2));
+            ClassicAssert.AreEqual(0.5, Math.Round(instance.F1(true), 2));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Numerics;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics
@@ -40,7 +41,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         [TestCase(270, 5)]
         public void ToRadians(double degrees, double value)
         {
-            Assert.AreEqual(value, Math.Round(degrees.ToRadians()), 2);
+            ClassicAssert.AreEqual(value, Math.Round(degrees.ToRadians()), 2);
         }
 
         [TestCase(0, 0, 1)]
@@ -50,32 +51,32 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
         public void GetVector(double degrees, double x, double y)
         {
             Vector2 result = NumericExtensions.GetVector(degrees);
-            Assert.AreEqual(x, Math.Round(result.X, 2));
-            Assert.AreEqual(y, Math.Round(result.Y, 2));
+            ClassicAssert.AreEqual(x, Math.Round(result.X, 2));
+            ClassicAssert.AreEqual(y, Math.Round(result.Y, 2));
         }
 
         [Test, TestCaseSource("dates")]
         public void GetVectorDate(DateTime date, double x, double y)
         {
             Vector2 result = NumericExtensions.GetYearVector(date);
-            Assert.AreEqual(x, Math.Round(result.X, 2));
-            Assert.AreEqual(y, Math.Round(result.Y, 2));
+            ClassicAssert.AreEqual(x, Math.Round(result.X, 2));
+            ClassicAssert.AreEqual(y, Math.Round(result.Y, 2));
         }
 
         [Test, TestCaseSource("datesWeeks")]
         public void GetWeekVector(DateTime date, double x, double y)
         {
             Vector2 result = NumericExtensions.GetWeekVector(date);
-            Assert.AreEqual(x, Math.Round(result.X, 2));
-            Assert.AreEqual(y, Math.Round(result.Y, 2));
+            ClassicAssert.AreEqual(x, Math.Round(result.X, 2));
+            ClassicAssert.AreEqual(y, Math.Round(result.Y, 2));
         }
 
         [Test, TestCaseSource("datesMonths")]
         public void GetMonthVector(DateTime date, double x, double y)
         {
             Vector2 result = NumericExtensions.GetMonthVector(date);
-            Assert.AreEqual(x, Math.Round(result.X, 2));
-            Assert.AreEqual(y, Math.Round(result.Y, 2));
+            ClassicAssert.AreEqual(x, Math.Round(result.X, 2));
+            ClassicAssert.AreEqual(y, Math.Round(result.Y, 2));
         }
 
         [Test]
@@ -84,23 +85,23 @@ namespace Wikiled.MachineLearning.Tests.Mathematics
             var data1 = Enumerable.Range(0, 100).ToArray();
             var data2 = Enumerable.Range(0, 100).ToArray();
             var result = new Random().Shuffle(data1, data2).ToArray();
-            Assert.AreEqual(2, result.Length);
-            Assert.AreEqual(100, result[0].Length);
+            ClassicAssert.AreEqual(2, result.Length);
+            ClassicAssert.AreEqual(100, result[0].Length);
             for (int i = 0; i < result[0].Length; i++)
             {
                 var arrayOne = result[0].Cast<int>().ToArray();
                 var arrayTwo = result[1].Cast<int>().ToArray();
-                Assert.AreEqual(arrayOne[i], arrayTwo[i]);
+                ClassicAssert.AreEqual(arrayOne[i], arrayTwo[i]);
             }
         }
 
         [Test]
         public void ShuffleArgument()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle().ToArray());
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle().ToArray());
             var data1 = Enumerable.Range(0, 100).ToArray();
             var data2 = Enumerable.Range(0, 10).ToArray();
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle(data2, data1).ToArray());
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => new Random().Shuffle(data2, data1).ToArray());
         }
     }
 }

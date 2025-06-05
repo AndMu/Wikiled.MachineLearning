@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Statistics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
@@ -19,27 +20,27 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
         public void CalculateDefault()
         {
             var result = SimpleCrossCorrelation.Calculate(signal1, signal2);
-            Assert.AreEqual(45, result.Result);
-            Assert.AreEqual(0.3013, Math.Round(result.Normalized, 4));
+            ClassicAssert.AreEqual(45, result.Result);
+            ClassicAssert.AreEqual(0.3013, Math.Round(result.Normalized, 4));
         }
 
         [Test]
         public void CalculateShifted()
         {
             var result = SimpleCrossCorrelation.Calculate(signal1, signal2, 3);
-            Assert.AreEqual(12, result.Result);
-            Assert.AreEqual(0.0804d, Math.Round(result.Normalized, 4));
+            ClassicAssert.AreEqual(12, result.Result);
+            ClassicAssert.AreEqual(0.0804d, Math.Round(result.Normalized, 4));
         }
 
         [Test]
         public void CalculateX()
         {
             var result = SimpleCrossCorrelation.Calculate(x1, x2, 1);
-            Assert.AreEqual(13, result.Result);
-            Assert.AreEqual(0.6187, Math.Round(result.Normalized, 4));
+            ClassicAssert.AreEqual(13, result.Result);
+            ClassicAssert.AreEqual(0.6187, Math.Round(result.Normalized, 4));
 
             result = SimpleCrossCorrelation.Calculate(x3, x4, 1);
-            Assert.AreEqual(0.6187, Math.Round(result.Normalized, 4));
+            ClassicAssert.AreEqual(0.6187, Math.Round(result.Normalized, 4));
         }
     }
 }

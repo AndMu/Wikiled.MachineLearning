@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Statistics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
@@ -75,7 +76,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
 
             regression.Calculate();
 
-            Assert.AreEqual(
+            ClassicAssert.AreEqual(
                 new[]
                 {
                     -3482258.63,
@@ -89,12 +90,12 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
                 regression.RegressionParameters.Select(item => Math.Round(item, 2)).ToArray());
 
             var result = regression.CalculateY(new []{83.0, 234289, 2356, 1590, 107608, 1947});
-            Assert.AreEqual(60056, Math.Round(result, 0));
+            ClassicAssert.AreEqual(60056, Math.Round(result, 0));
 
             result = regression.CalculateY(new[] { 116.9, 554894, 4007, 2827, 130081, 1962 });
-            Assert.AreEqual(70758, Math.Round(result, 0));
+            ClassicAssert.AreEqual(70758, Math.Round(result, 0));
 
-            Assert.AreEqual(
+            ClassicAssert.AreEqual(
                 new[]
                 {
                     267.34,

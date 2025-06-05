@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Mathematics.Statistics;
 
 namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
@@ -37,23 +38,23 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Statistics
         {
             // kiausinai causina
             var results = GrangerCausality.TestGranger(eggs, chickens, 1);
-            Assert.AreEqual(0.8292, Math.Round(results, 4));
+            ClassicAssert.AreEqual(0.8292, Math.Round(results, 4));
 
             results = GrangerCausality.TestGranger(chickens, eggs, 1);
-            Assert.AreEqual(0.2772, Math.Round(results, 4));
+            ClassicAssert.AreEqual(0.2772, Math.Round(results, 4));
 
             results = GrangerCausality.TestGranger(eggs, chickens, 4);
-            Assert.AreEqual(0.8125, Math.Round(results, 4));
+            ClassicAssert.AreEqual(0.8125, Math.Round(results, 4));
 
             results = GrangerCausality.TestGranger(chickens, eggs, 4);
-            Assert.AreEqual(0.0057, Math.Round(results, 4));
+            ClassicAssert.AreEqual(0.0057, Math.Round(results, 4));
         }
 
         [Test]
         public void MultiTestGranger()
         {
             var results = GrangerCausality.MultiTestGranger(eggs, chickens, 1);
-            Assert.AreEqual("Granger Lag: <1> X: <0.829193462613005> Y: <0.277169618232637>", results.ToString());
+            ClassicAssert.AreEqual("Granger Lag: <1> X: <0.829193462613005> Y: <0.277169618232637>", results.ToString());
         }
     }
 }

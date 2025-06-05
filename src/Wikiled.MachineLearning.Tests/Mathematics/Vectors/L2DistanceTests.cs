@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Wikiled.MachineLearning.Normalization;
 using Wikiled.MachineLearning.Mathematics.Vectors;
 
@@ -35,7 +36,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("15", 15));
 
             double result = instance.Measure(vector1, vector2);
-            Assert.AreEqual(13, result);
+            ClassicAssert.AreEqual(13, result);
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("15", 15));
 
             double result = instance.Measure(vector1, vector2);
-            Assert.AreEqual(0.68, Math.Round(result, 2));
+            ClassicAssert.AreEqual(0.68, Math.Round(result, 2));
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]
@@ -86,7 +87,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("4", 4),
                 new SimpleCell("15", 15));
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
+            ClassicAssert.Throws<ArgumentOutOfRangeException>(() => instance.Measure(vector1, vector2));
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace Wikiled.MachineLearning.Tests.Mathematics.Vectors
                 new SimpleCell("1", 1),
                 new SimpleCell("3", 3));
 
-            Assert.Throws<ArgumentNullException>(() => instance.Measure(vector1, null));
+            ClassicAssert.Throws<ArgumentNullException>(() => instance.Measure(vector1, null));
         }
     }
 }
